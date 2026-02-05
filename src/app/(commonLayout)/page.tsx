@@ -11,6 +11,9 @@ const HomePage = () => {
           -> become a tutor
           -> become a tutor 
       */}
+      <div className="pl-20 mt-56 mx-auto text-5xl font-bold">
+        This is a test line to check the font
+      </div>
     </div>
   );
 };
