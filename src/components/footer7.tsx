@@ -72,10 +72,10 @@ const defaultLegalLinks = [
 
 const Footer7 = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
+    url: "/",
+    src: "/skillbridge logo.png",
     alt: "logo",
-    title: "Shadcnblocks.com",
+    title: "Skill Bridge",
   },
   sections = defaultSections,
   description = "A collection of components for your startup business or side project.",
@@ -85,7 +85,7 @@ const Footer7 = ({
   className,
 }: Footer7Props) => {
   return (
-    <section className={cn("py-32", className)}>
+    <section className={cn("py-32 px-16 bg-black text-white", className)}>
       <div className="container">
         <div className="flex w-full flex-col justify-between gap-10 lg:flex-row lg:items-start lg:text-left">
           <div className="flex w-full flex-col justify-between gap-6 lg:items-start">

@@ -4,12 +4,6 @@ import { MenuIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -58,7 +52,7 @@ const Navbar5 = ({ className }: Navbar5Props) => {
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuLink
-                  href="#"
+                  href="/tutors"
                   className={`${navigationMenuTriggerStyle()}relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:w-full after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100`}
                 >
                   Tutors
@@ -83,9 +77,12 @@ const Navbar5 = ({ className }: Navbar5Props) => {
             </NavigationMenuList>
           </NavigationMenu>
           <div className="hidden items-center gap-4 lg:flex">
-            <Button className="bg-transparent text-xl hover:bg-transparent hover:text-black relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:w-full after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100">
+            <Link
+              href={"/login"}
+              className="bg-transparent text-xl hover:bg-transparent hover:text-black relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:w-full after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100"
+            >
               Log in
-            </Button>
+            </Link>
           </div>
           <Sheet>
             <SheetTrigger asChild className="lg:hidden">

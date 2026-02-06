@@ -5,7 +5,7 @@ const HeroBanner = () => {
   return (
     <div>
       {/* <section className="relative  bg-gradient-to-br from-slate-50 to-blue-50 overflow-hidden"> */}
-      <section className="relative  bg-gradient-to-br from-slate-500 to-blue-500 overflow-hidden">
+      <section className="relative  bg-gradient-to-br from-[#7549B1] to-[#E9B200] overflow-hidden">
         {/* Organic Background Shapes */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Left curved line decoration */}
@@ -35,17 +35,20 @@ const HeroBanner = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div className="space-y-6 z-10">
-              <h1 className="text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">
+              <h1 className="text-5xl lg:text-6xl font-bold text-[#FDD023] leading-tight">
                 Connect with Expert{" "}
-                <span className="text-teal-600">tutors</span> Master Any Skill
+                <span className="text-[#461D7C]">tutors</span> Master Any Skill
               </h1>
-              <p className="text-lg text-slate-600 max-w-md">
+              <p className="text-lg text-gray-800 max-w-md">
                 Find the perfect tutor for your learning goals. Browse hundreds
                 of qualified experts, book sessions instantly, and start
                 learning today.
               </p>
-              <Button size="lg" className="bg-slate-800 hover:bg-slate-700">
-                Find your teacher
+              <Button
+                size="lg"
+                className=" text-[18px]  hover:cursor-pointer   bg-slate-800 hover:bg-slate-700"
+              >
+                Find your tutor
                 <svg
                   className="ml-2 w-5 h-5"
                   fill="none"
