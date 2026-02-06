@@ -1,3 +1,7 @@
+import { Footer7 } from "@/components/footer7";
+import HeroBanner from "@/components/home/hero";
+import { Navbar5 } from "@/components/navbar5";
+
 const HomePage = () => {
   return (
     <div>
@@ -11,9 +15,10 @@ const HomePage = () => {
           -> become a tutor
           -> become a tutor 
       */}
-      <div className="pl-20 mt-56 mx-auto text-5xl font-bold">
-        This is a test line to check the font
-      </div>
+      {/* <Banner /> */}
+      <Navbar5 />
+      <HeroBanner />
+      <Footer7 />
     </div>
   );
 };
