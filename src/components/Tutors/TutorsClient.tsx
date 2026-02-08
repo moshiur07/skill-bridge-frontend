@@ -16,6 +16,7 @@ import {
 import { Slider } from "@/components/ui/slider";
 import Link from "next/link";
 import { useEffect, useState, useTransition, useMemo } from "react";
+import { TutorCardSkeleton } from "./TutorCardSkeleton";
 
 interface Category {
   id: number;
@@ -57,8 +58,6 @@ export function TutorsClient({
   const [isPending, startTransition] = useTransition();
 
   const [showFilters, setShowFilters] = useState(false);
-  const [remainingTutors, setRemainingTutors] = useState<Tutor[]>([]);
-  const [isLoadingMore, setIsLoadingMore] = useState(true);
 
   const filters = {
     category: searchParams.category || "all",
@@ -67,47 +66,8 @@ export function TutorsClient({
     search: searchParams.search || "",
   };
 
-  // Fetch remaining tutors after initial 3 (client-side)
-  useEffect(() => {
-    const fetchRemainingTutors = async () => {
-      try {
-        const params = new URLSearchParams();
-        params.append("skip", "3");
-
-        // Add active filters to API call
-        if ((await filters.category) !== "all") {
-          params.append("category", filters.category);
-        }
-        if (filters.rating !== "all") {
-          params.append("rating", filters.rating);
-        }
-        if (filters.price !== 200) {
-          params.append("price", filters.price.toString());
-        }
-        if (filters.search) {
-          params.append("search", filters.search);
-        }
-
-        const response = await fetch(
-          `http://localhost:5000/api/tutor?${params.toString()}`,
-        );
-        console.log(response);
-        const data = await response.json();
-        setRemainingTutors(data.data || []);
-      } catch (error) {
-        console.error("Error fetching remaining tutors:", error);
-      } finally {
-        setIsLoadingMore(false);
-      }
-    };
-
-    fetchRemainingTutors();
-  }, [filters]);
-
   // Combine initial + remaining tutors
-  const allTutors = useMemo(() => {
-    return [...initialTutors, ...remainingTutors];
-  }, [initialTutors, remainingTutors]);
+  const allTutors = initialTutors;
 
   const categories = useMemo(() => {
     const categoryMap = new Map();
@@ -121,44 +81,6 @@ export function TutorsClient({
     return Array.from(categoryMap.values());
   }, [allTutors]);
 
-  //   // Filter tutors based on URL params (client-side only for instant feedback)
-  //   const filteredTutors = useMemo(() => {
-  //     let filtered = [...allTutors];
-
-  //     // Search filter
-  //     if (filters.search) {
-  //       const searchLower = filters.search.toLowerCase();
-  //       filtered = filtered.filter(
-  //         (tutor) =>
-  //           tutor.user?.name.toLowerCase().includes(searchLower) ||
-  //           tutor.bio.toLowerCase().includes(searchLower) ||
-  //           tutor.categories?.some((cat) =>
-  //             cat.name.toLowerCase().includes(searchLower),
-  //           ),
-  //       );
-  //     }
-
-  //     // Category filter (now using category ID)
-  //     if (filters.category !== "all") {
-  //       const categoryId = parseInt(filters.category);
-  //       filtered = filtered.filter((tutor) =>
-  //         tutor.categories?.some((cat) => cat.id === categoryId),
-  //       );
-  //     }
-
-  //     // Rating filter
-  //     if (filters.rating !== "all") {
-  //       const minRating = parseFloat(filters.rating);
-  //       filtered = filtered.filter((tutor) => tutor.rating_average >= minRating);
-  //     }
-
-  //     // Max price filter
-  //     filtered = filtered.filter((tutor) => tutor.hourly_rate <= filters.price);
-
-  //     return filtered;
-  //   }, [allTutors, filters]);
-
-  // Backend handles filtering, we just display the data
   const filteredTutors = allTutors;
 
   // Update URL params (replaces useState)
@@ -185,6 +107,22 @@ export function TutorsClient({
       router.push(pathname, { scroll: false });
     });
   };
+
+  if (!initialTutors || initialTutors.length === 0) {
+    return (
+      <>
+        {/* Show filter section even when loading */}
+        <div className="mb-12">
+          <Card className="p-6">
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">Loading tutors...</p>
+            </div>
+          </Card>
+        </div>
+        <TutorCardSkeleton count={3} />
+      </>
+    );
+  }
 
   return (
     <>
@@ -288,7 +226,7 @@ export function TutorsClient({
               {/* Active Filters & Reset */}
               <div className="flex items-center justify-between pt-4 border-t">
                 <div className="text-sm text-muted-foreground">
-                  {isPending || isLoadingMore ? (
+                  {isPending ? (
                     <span className="flex items-center gap-2">
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
                       Loading tutors...
@@ -348,12 +286,6 @@ export function TutorsClient({
                     <Badge className="absolute top-4 left-4 bg-amber-500 hover:bg-amber-600">
                       Featured
                     </Badge>
-                  )}
-                  {/* Loading indicator for tutors beyond initial 3 */}
-                  {index >= initialTutors.length && isLoadingMore && (
-                    <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
-                      <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-                    </div>
                   )}
                 </div>
 

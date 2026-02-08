@@ -1,61 +1,46 @@
-// import { BrowseTutors } from "@/components/blog8";
-
-// const TutorsPage = () => {
-//   return (
-//     <div className="">
-//       <BrowseTutors />
-//     </div>
-//   );
-// };
-
-// export default TutorsPage;
-
-// ! claude
-
-import { Suspense } from "react";
-import { TutorsClient } from "@/components/TutorsClient";
-import { TutorCardSkeleton } from "@/components/TutorCardSkeleton";
+import { TutorsClient } from "@/components/Tutors/TutorsClient";
 
 // This is the Server Component - fetches initial data
 export default async function TutorsPage({
   searchParams,
 }: {
-  searchParams: {
+  searchParams: Promise<{
     category?: string;
     rating?: string;
     price?: string;
     search?: string;
-  };
+  }>;
 }) {
-  // Fetch first 3 tutors on server (SSR - instant load)
-  // Fetch first 3 tutors on server (SSR - instant load)
-  // Build query params with filters
-  const params = new URLSearchParams({ limit: "3" });
+  // ✅ Await searchParams in Next.js 15+
+  const params = await searchParams;
 
-  if (searchParams.category) {
-    params.append("category", searchParams.category);
+  // Build query params with filters
+  const queryParams = new URLSearchParams();
+
+  if (params.category) {
+    queryParams.append("category", params.category);
   }
-  if (searchParams.rating) {
-    params.append("rating", searchParams.rating);
+  if (params.rating) {
+    queryParams.append("rating", params.rating);
   }
-  if (searchParams.price) {
-    params.append("price", searchParams.price);
+  if (params.price) {
+    queryParams.append("price", params.price);
   }
-  if (searchParams.search) {
-    params.append("search", searchParams.search);
+  if (params.search) {
+    queryParams.append("search", params.search);
   }
 
   const initialData = await fetch(
-    `http://localhost:5000/api/tutor?${params.toString()}`,
+    `http://localhost:5000/api/tutor?${queryParams.toString()}`,
     {
-      cache: "no-store", // Always fresh data
+      cache: "no-store",
     },
   );
 
   const initialTutors = await initialData.json();
 
   return (
-    <section className="flex mx-auto justify-center align-middle bg-muted">
+    <section className="flex mx-auto justify-center align-middle">
       <div className="py-16 md:py-24">
         <div className="container">
           {/* Header */}
@@ -70,12 +55,10 @@ export default async function TutorsPage({
           </div>
 
           {/* Client Component handles all interactivity */}
-          <Suspense fallback={<TutorCardSkeleton count={3} />}>
-            <TutorsClient
-              initialTutors={initialTutors.data}
-              searchParams={searchParams}
-            />
-          </Suspense>
+          <TutorsClient
+            initialTutors={initialTutors.data || []}
+            searchParams={params}
+          />
         </div>
       </div>
     </section>
