@@ -1,3 +1,4 @@
+import { themeColor } from "@/components/helper/colorValue";
 import { TutorsClient } from "@/components/Tutors/TutorsClient";
 
 // This is the Server Component - fetches initial data
@@ -40,7 +41,9 @@ export default async function TutorsPage({
   const initialTutors = await initialData.json();
 
   return (
-    <section className="flex mx-auto justify-center align-middle bg-linear-to-br from-purple-700 via-yellow-600 to-green-400">
+    <section
+      className={`flex justify-center mx-auto bg-linear-150 from-[${themeColor.dBlue}] via-[${themeColor.vanilla}] to-[${themeColor.dYellow}]`}
+    >
       <div className="py-16 md:py-24">
         <div className="container">
           {/* Header */}
@@ -48,7 +51,7 @@ export default async function TutorsPage({
             <h1 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl mb-4">
               Browse All Tutors
             </h1>
-            <p className="mx-auto max-w-2xl text-muted-foreground md:text-lg">
+            <p className="mx-auto max-w-2xl text-[#40E0D0] md:text-lg">
               There are many tutors available, you can find the one that suits
               your needs. Filter by category, hourly rate, and rating.
             </p>

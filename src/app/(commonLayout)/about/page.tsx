@@ -16,6 +16,7 @@ import {
 import Image from "next/image";
 import { themeColor } from "@/components/helper/colorValue";
 import AboutFeatureds from "@/components/about3";
+import Link from "next/link";
 
 export default function AboutPage() {
   return (
@@ -27,14 +28,16 @@ export default function AboutPage() {
         <AboutFeatureds />
 
         {/* Our Story Section */}
-        <section className="py-16 md:py-24">
+        <section
+          className={`py-16 md:py-24  flex justify-center text-[${themeColor.vanilla}] text-center`}
+        >
           <div className="container max-w-4xl">
             <div className="text-center mb-12">
               <Badge className="mb-4">Our Story</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 How SkillBridge Started
               </h2>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-lg text-[#40E0D0]">
                 Born from a simple idea: everyone deserves access to quality
                 education
               </p>
@@ -66,7 +69,7 @@ export default function AboutPage() {
         </section>
 
         {/* Our Values Section */}
-        <section className="py-16 md:py-24 bg-muted/30">
+        <section className="py-16 md:py-24 ">
           <div className="container">
             <div className="text-center mb-12">
               <Badge className="mb-4">Our Values</Badge>
@@ -132,10 +135,10 @@ export default function AboutPage() {
           <div className="container">
             <div className="text-center mb-12">
               <Badge className="mb-4">Our Team</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold  mb-4">
                 Meet the People Behind SkillBridge
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-[#40E0D0] max-w-2xl mx-auto">
                 A passionate team dedicated to revolutionizing online education
               </p>
             </div>
@@ -185,7 +188,9 @@ export default function AboutPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+        <section
+          className={`flex justify-center  py-16 md:py-24 bg-[${themeColor.lBlue}] text-primary-foreground`}
+        >
           <div className="container text-center max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to Start Learning?
@@ -195,13 +200,19 @@ export default function AboutPage() {
               with SkillBridge
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button size="lg" variant="secondary">
-                Browse Tutors
-              </Button>
+              <Link href={"/tutors"}>
+                <Button
+                  size="lg"
+                  variant="secondary"
+                  className=" hover:cursor-pointer"
+                >
+                  Browse Tutors
+                </Button>
+              </Link>
               <Button
                 size="lg"
                 variant="outline"
-                className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                className="bg-transparent  hover:cursor-pointer border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
               >
                 Become a Tutor
               </Button>
