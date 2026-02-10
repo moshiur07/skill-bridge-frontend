@@ -38,34 +38,73 @@ const defaultFaqs: FaqItem[] = [
   },
 ];
 
+export const skillBridgeFaqs: FaqItem[] = [
+  // General Platform Questions
+  {
+    question: "What is SkillBridge?",
+    answer:
+      "SkillBridge is an online tutoring platform that connects students with expert tutors across various subjects. Whether you need help with mathematics, programming, languages, or any other subject, SkillBridge makes it easy to find qualified tutors, book sessions, and learn at your own pace.",
+  },
+  {
+    question: "How does SkillBridge work?",
+    answer:
+      "SkillBridge works in three simple steps: First, browse our tutors by subject, rating, or price. Second, select an available time slot that fits your schedule. Third, book your session and connect with your tutor online. You can manage all your bookings, leave reviews, and track your learning progress through your dashboard.",
+  },
+  {
+    question: "Is SkillBridge free to use?",
+    answer:
+      "Creating an account and browsing tutors on SkillBridge is completely free. You only pay when you book a tutoring session. Each tutor sets their own hourly rate, which is clearly displayed on their profile. There are no hidden fees or subscription charges.",
+  },
+  {
+    question: "What subjects can I learn on SkillBridge?",
+    answer:
+      "SkillBridge offers tutoring in a wide range of subjects including Mathematics, Physics, Chemistry, Biology, Computer Science, Web Development, Data Science, English Literature, Foreign Languages, Economics, History, Psychology, Graphic Design, Digital Marketing, and many more. You can filter tutors by category to find the perfect match for your learning needs.",
+  },
+
+  // Student Questions
+  {
+    question: "How do I find the right tutor for me?",
+    answer:
+      "You can find the perfect tutor by using our advanced filters on the Browse Tutors page. Filter by subject category, minimum rating, hourly rate, and use the search bar to look for specific topics. Each tutor profile shows their expertise, bio, rating, reviews from other students, and available time slots to help you make an informed decision.",
+  },
+  {
+    question: "How do I become a tutor on SkillBridge?",
+    answer:
+      "To become a tutor, click 'Register' and select 'Tutor' as your role. You'll need to create a profile with your bio, expertise, hourly rate, and qualifications. Once your profile is complete, you can set your availability and start accepting bookings. We recommend adding a professional photo and detailed bio to attract more students.",
+  },
+];
+
 const Faq5 = ({
   badge = "FAQ",
   heading = "Common Questions & Answers",
-  description = "Find out all the essential details about our platform and how it can serve your needs.",
-  faqs = defaultFaqs,
+  description = "Find out all the essential details  about our platform and how it can serve your needs.",
+  faqs = skillBridgeFaqs,
   className,
 }: Faq5Props) => {
   return (
-    <section className={cn("py-32", className)}>
-      <div className="container">
+    <section
+      className={cn(
+        "mb-5 flex mx-auto justify-center align-middle ",
+        className,
+      )}
+    >
+      <div className="container py-10 border  rounded-4xl shadow-2xs shadow-[#FDD023]">
         <div className="text-center">
           <Badge className="text-xs font-medium">{badge}</Badge>
           <h1 className="mt-4 text-4xl font-semibold">{heading}</h1>
-          <p className="mt-6 font-medium text-muted-foreground">
-            {description}
-          </p>
+          <p className="mt-6  font-medium text-white">{description}</p>
         </div>
         <div className="mx-auto mt-14 max-w-xl">
           {faqs.map((faq, index) => (
             <div key={index} className="mb-8 flex gap-4">
-              <span className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-secondary font-mono text-xs text-primary">
+              <span className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-secondary  text-primary">
                 {index + 1}
               </span>
               <div>
                 <div className="mb-2 flex items-center justify-between">
-                  <h3 className="font-medium">{faq.question}</h3>
+                  <h3 className="font-medium text-xl">{faq.question}</h3>
                 </div>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                <p className="text-[#FCECAE]">{faq.answer}</p>
               </div>
             </div>
           ))}

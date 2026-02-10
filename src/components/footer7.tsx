@@ -85,7 +85,12 @@ const Footer7 = ({
   className,
 }: Footer7Props) => {
   return (
-    <section className={cn("py-32 px-16 bg-black text-white", className)}>
+    <section
+      className={cn(
+        "py-32 px-16 bg-black text-white flex mx-auto justify-center align-middle",
+        className,
+      )}
+    >
       <div className="container">
         <div className="flex w-full flex-col justify-between gap-10 lg:flex-row lg:items-start lg:text-left">
           <div className="flex w-full flex-col justify-between gap-6 lg:items-start">

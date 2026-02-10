@@ -3,6 +3,7 @@ import { TutorProfileClient } from "@/components/Tutors/TutorProfileClient";
 import { TutorProfilePageProps, ApiResponse } from "@/Types/schemaTypes";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { themeColor } from "@/components/helper/colorValue";
 
 export default async function TutorProfilePage({
   params,
@@ -25,9 +26,11 @@ export default async function TutorProfilePage({
   }
 
   const tutor = result.data;
-
+  console.log(themeColor.vanilla);
   return (
-    <section className="flex justify-center mx-auto">
+    <section
+      className={`flex justify-center mx-auto bg-linear-to-br from-[${themeColor.dBlue}] via-[${themeColor.dYellow}] to-[${themeColor.vanilla}]`}
+    >
       <div className="min-h-screen py-16 md:py-24">
         <div className="container">
           {/* Hero Section */}

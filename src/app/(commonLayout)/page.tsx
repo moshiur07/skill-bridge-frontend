@@ -1,4 +1,4 @@
-import About3 from "@/components/about3";
+import AboutFeatureds from "@/components/about3";
 import { Faq5 } from "@/components/faq5";
 import { Footer7 } from "@/components/footer7";
 import HeroBanner from "@/components/home/hero";
@@ -15,15 +15,16 @@ const HomePage = () => {
           -> how skillbridge works/ why skillbridge
           -> featured tutors
           -> testimonials
-          -> become a tutor
-          -> become a tutor 
       */}
       {/* <Banner /> */}
-      <Navbar5 />
+      {/* <Navbar5 /> */}
       <HeroBanner />
-      <About3 />
-      <Faq5 />
-      <Testimonial01 />
+      <div className="bg-linear-60 from-[#461D7C] to-[#E9B200]">
+        <AboutFeatureds />
+        <Faq5 />
+        <Testimonial01 />
+        {/*  become a tutor */}
+      </div>
       <Footer7 />
     </div>
   );

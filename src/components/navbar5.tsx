@@ -31,7 +31,7 @@ interface Navbar5Props {
 const Navbar5 = ({ className }: Navbar5Props) => {
   return (
     <section className={cn("relative", className)}>
-      <div className=" z-10  w-full py-4 fixed top-0 left-0   bg-opacity-50 backdrop-blur-lg  transition-all duration-300 ease-in-out bg-white/0">
+      <div className=" z-10  w-full py-4 fixed top-0 left-0  bg-opacity-50 backdrop-blur-lg  transition-all duration-300 ease-in-out bg-white/0">
         {/* <div className="absolute z-10  w-full py-4 "> */}
         <nav className="flex justify-between px-10 ">
           <Link href="/" className="flex items-center gap-2">
@@ -58,7 +58,7 @@ const Navbar5 = ({ className }: Navbar5Props) => {
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink
-                  href="#"
+                  href="/about"
                   className={`${navigationMenuTriggerStyle()}relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:w-full after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100`}
                 >
                   About

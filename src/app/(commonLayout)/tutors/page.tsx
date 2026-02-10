@@ -40,7 +40,7 @@ export default async function TutorsPage({
   const initialTutors = await initialData.json();
 
   return (
-    <section className="flex mx-auto justify-center align-middle">
+    <section className="flex mx-auto justify-center align-middle bg-linear-to-br from-purple-700 via-yellow-600 to-green-400">
       <div className="py-16 md:py-24">
         <div className="container">
           {/* Header */}
