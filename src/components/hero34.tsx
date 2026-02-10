@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface Hero34Props {
   className?: string;
@@ -24,12 +25,14 @@ const Hero34 = ({ className }: Hero34Props) => {
               qualified experts, book sessions instantly, and start learning
               today.
             </p>
-            <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
-              <Button className="bg-[#FCECAE] text-1xl text-[#461D7C] hover:text-white hover:cursor-pointer">
-                Find Your Tutor
-                <ArrowRight className="size-4" />
-              </Button>
-            </div>
+            <Link href={"/tutors"}>
+              <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
+                <Button className="bg-[#FCECAE] text-1xl text-[#461D7C] hover:text-white hover:cursor-pointer">
+                  Find Your Tutor
+                  <ArrowRight className="size-4" />
+                </Button>
+              </div>
+            </Link>
           </div>
           <div>
             <img
