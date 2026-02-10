@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { TutorProfileClient } from "@/components/Tutors/TutorProfileClient";
 import { TutorProfilePageProps, ApiResponse } from "@/Types/schemaTypes";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function TutorProfilePage({
   params,
@@ -126,6 +128,12 @@ export default async function TutorProfilePage({
                     </div>
                   </div>
                 )}
+
+                <Link href={`/booking/${tutor.id}`}>
+                  <Button className="w-full py-6 text-black hover:text-white hover:cursor-pointer text-[18px] mt-3 bg-[#FDD023]">
+                    Book Now
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

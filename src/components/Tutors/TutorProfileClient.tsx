@@ -290,22 +290,6 @@ export function TutorProfileClient({
           </div>
         </TabsContent>
       </Tabs>
-
-      {/* Contact Section */}
-      <Card className="p-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <h3 className="text-2xl font-bold mb-2">Have Questions?</h3>
-            <p className="text-muted-foreground">
-              Send a message to {tutor.user.name} before booking
-            </p>
-          </div>
-          <Button size="lg" variant="outline" className="gap-2">
-            <MessageSquare className="h-5 w-5" />
-            Contact Tutor
-          </Button>
-        </div>
-      </Card>
     </div>
   );
 }
