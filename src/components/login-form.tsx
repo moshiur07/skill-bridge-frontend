@@ -34,6 +34,7 @@ export function LoginForm({
                   type="email"
                   placeholder="m@example.com"
                   required
+                  className="bg-slate-50"
                 />
               </Field>
               <Field>
@@ -46,7 +47,12 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  className="bg-slate-50"
+                />
               </Field>
               <Field>
                 <Button type="submit">Login</Button>
@@ -97,10 +103,6 @@ export function LoginForm({
           </div>
         </CardContent>
       </Card>
-      <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
-      </FieldDescription>
     </div>
   );
 }

@@ -10,6 +10,15 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 export function SignupForm({
   className,
@@ -27,6 +36,18 @@ export function SignupForm({
                   Enter your email below to create your account
                 </p>
               </div>
+              {/* name */}
+              <Field>
+                <FieldLabel htmlFor="name">Name</FieldLabel>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Your Name"
+                  required
+                  className="bg-slate-50"
+                />
+              </Field>
+              {/* email */}
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
@@ -34,28 +55,43 @@ export function SignupForm({
                   type="email"
                   placeholder="m@example.com"
                   required
+                  className="bg-slate-50"
                 />
-                <FieldDescription>
-                  We&apos;ll use this to contact you. We will not share your
-                  email with anyone else.
-                </FieldDescription>
               </Field>
+              {/* password */}
               <Field>
                 <Field className="grid grid-cols-2 gap-4">
                   <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input id="password" type="password" required />
-                  </Field>
-                  <Field>
-                    <FieldLabel htmlFor="confirm-password">
-                      Confirm Password
-                    </FieldLabel>
-                    <Input id="confirm-password" type="password" required />
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="password"
+                      required
+                      className="bg-slate-50"
+                    />
                   </Field>
                 </Field>
-                <FieldDescription>
-                  Must be at least 8 characters long.
-                </FieldDescription>
+              </Field>
+              {/* role */}
+              <Field>
+                <Field className="grid grid-cols-2 gap-4">
+                  <Field>
+                    <FieldLabel htmlFor="role">Role</FieldLabel>
+                    <Select required>
+                      <SelectTrigger className="bg-slate-50">
+                        <SelectValue placeholder="Select your Role" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Role</SelectLabel>
+                          <SelectItem value="student">Student</SelectItem>
+                          <SelectItem value="tutor">Tutor</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </Field>
               </Field>
               <Field>
                 <Button type="submit">Create Account</Button>
@@ -106,10 +142,6 @@ export function SignupForm({
           </div>
         </CardContent>
       </Card>
-      <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
-      </FieldDescription>
     </div>
   );
 }
