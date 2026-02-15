@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
+import Link from "next/link";
+import { NoiseBackground } from "../ui/noise-background";
 
 const HeroBanner = () => {
   return (
@@ -44,25 +46,37 @@ const HeroBanner = () => {
                 of qualified experts, book sessions instantly, and start
                 learning today.
               </p>
-              <Button
-                size="lg"
-                className=" text-[18px]  hover:cursor-pointer   bg-slate-800 hover:bg-slate-700"
+              <NoiseBackground
+                containerClassName="w-fit p-2 rounded-full "
+                gradientColors={[
+                  "rgb(255, 100, 150)",
+                  "rgb(100, 150, 255)",
+                  "rgb(255, 200, 100)",
+                ]}
               >
-                Find your tutor
-                <svg
-                  className="ml-2 w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </Button>
+                <Link href="/tutors">
+                  {" "}
+                  <Button
+                    size="lg"
+                    className=" text-[18px] rounded-full  hover:cursor-pointer   bg-slate-800 hover:bg-slate-700"
+                  >
+                    Find your tutor
+                    <svg
+                      className="ml-2 w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </Button>
+                </Link>
+              </NoiseBackground>
             </div>
 
             {/* Right Images with Blob Shapes */}

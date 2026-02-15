@@ -1,8 +1,7 @@
 import AboutFeatureds from "@/components/about3";
 import { Faq5 } from "@/components/faq5";
-import { Footer7 } from "@/components/footer7";
 import HeroBanner from "@/components/home/hero";
-import { Navbar5 } from "@/components/navbar5";
+
 import Testimonial01 from "@/components/shadcn-space/blocks/testimonial-02/testimonial";
 
 const HomePage = () => {
@@ -25,7 +24,6 @@ const HomePage = () => {
         <Testimonial01 />
         {/*  become a tutor */}
       </div>
-      <Footer7 />
     </div>
   );
 };

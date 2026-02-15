@@ -1,5 +1,6 @@
 import { Footer7 } from "@/components/footer7";
-import { Navbar5 } from "@/components/navbar5";
+import { Navbar5 } from "@/components/home/navbar5";
+
 import React from "react";
 
 const CommonLayout = ({ children }: { children: React.ReactNode }) => {

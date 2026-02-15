@@ -10,14 +10,15 @@ export default async function TutorsPage({
     rating?: string;
     price?: string;
     search?: string;
+    page?: string;
   }>;
 }) {
   // ✅ Await searchParams in Next.js 15+
   const params = await searchParams;
-
+  console.log("params:", params);
   // Build query params with filters
   const queryParams = new URLSearchParams();
-
+  console.log("queryparams", queryParams);
   if (params.category) {
     queryParams.append("category", params.category);
   }
@@ -31,15 +32,19 @@ export default async function TutorsPage({
     queryParams.append("search", params.search);
   }
 
+  if (params.page) {
+    queryParams.append("page", params.page);
+  }
+
   const initialData = await fetch(
-    `http://localhost:5000/api/tutor?${queryParams.toString()}`,
+    `${process.env.BACKEND_PUBLIC_URL}/api/tutor?${queryParams.toString()}`,
     {
       cache: "no-store",
     },
   );
 
   const initialTutors = await initialData.json();
-
+  console.log(initialTutors);
   return (
     <section
       className={`flex justify-center mx-auto bg-linear-150 from-[${themeColor.dBlue}] via-[${themeColor.vanilla}] to-[${themeColor.dYellow}]`}

@@ -29,7 +29,7 @@ export default function AboutPage() {
 
         {/* Our Story Section */}
         <section
-          className={`py-16 md:py-24  flex justify-center text-[${themeColor.vanilla}] text-center`}
+          className={`py-16 md:py-24 px-5 lg:px-0 flex justify-center text-[${themeColor.vanilla}] text-center`}
         >
           <div className="container max-w-4xl">
             <div className="text-center mb-12">
@@ -69,7 +69,7 @@ export default function AboutPage() {
         </section>
 
         {/* Our Values Section */}
-        <section className="py-16 md:py-24 ">
+        <section className="py-16 md:py-24 px-5 lg:px-0">
           <div className="container">
             <div className="text-center mb-12">
               <Badge className="mb-4">Our Values</Badge>
@@ -80,48 +80,48 @@ export default function AboutPage() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {/* Value 1 */}
-              <Card className="p-6 text-center">
+              <Card className="p-6 text-center bg-slate-500">
                 <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
                   <Heart className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Quality</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-slate-200">
                   Every tutor is carefully vetted to ensure expert-level
                   knowledge and teaching ability.
                 </p>
               </Card>
 
               {/* Value 2 */}
-              <Card className="p-6 text-center">
+              <Card className="p-6 text-center bg-slate-500">
                 <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
                   <Shield className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Trust</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-slate-200">
                   Secure payments, verified profiles, and transparent reviews
                   build confidence.
                 </p>
               </Card>
 
               {/* Value 3 */}
-              <Card className="p-6 text-center">
+              <Card className="p-6 text-center bg-slate-500">
                 <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
                   <Globe className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Accessibility</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-slate-200">
                   Learning should be available to everyone, regardless of
                   location or background.
                 </p>
               </Card>
 
               {/* Value 4 */}
-              <Card className="p-6 text-center">
+              <Card className="p-6 text-center bg-slate-500">
                 <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
                   <Clock className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Flexibility</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-slate-200">
                   Learn on your schedule with tutors available across all time
                   zones.
                 </p>
@@ -131,7 +131,7 @@ export default function AboutPage() {
         </section>
 
         {/* Team Section (Optional) */}
-        <section className="py-16 md:py-24">
+        <section className="py-16 md:py-24 px-5 lg:px-0">
           <div className="container">
             <div className="text-center mb-12">
               <Badge className="mb-4">Our Team</Badge>
@@ -145,41 +145,37 @@ export default function AboutPage() {
 
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {/* Team Member 1 */}
-              <Card className="p-6 text-center">
+              <Card className="p-6 text-center bg-slate-500">
                 <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center">
                   <Users className="w-12 h-12 text-primary" />
                 </div>
                 <h3 className="text-lg font-bold mb-1">Sarah Johnson</h3>
-                <p className="text-sm text-muted-foreground mb-3">
-                  Founder & CEO
-                </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-slate-200 mb-3">Founder & CEO</p>
+                <p className="text-xs text-slate-200">
                   Former educator with 15+ years of teaching experience
                 </p>
               </Card>
 
               {/* Team Member 2 */}
-              <Card className="p-6 text-center">
+              <Card className="p-6 text-center bg-slate-500">
                 <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center">
                   <Users className="w-12 h-12 text-primary" />
                 </div>
                 <h3 className="text-lg font-bold mb-1">Michael Chen</h3>
-                <p className="text-sm text-muted-foreground mb-3">CTO</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-slate-200 mb-3">CTO</p>
+                <p className="text-xs text-slate-200">
                   Tech innovator passionate about edtech solutions
                 </p>
               </Card>
 
               {/* Team Member 3 */}
-              <Card className="p-6 text-center">
+              <Card className="p-6 text-center bg-slate-500">
                 <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center">
                   <Users className="w-12 h-12 text-primary" />
                 </div>
                 <h3 className="text-lg font-bold mb-1">Emily Rodriguez</h3>
-                <p className="text-sm text-muted-foreground mb-3">
-                  Head of Education
-                </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-slate-200 mb-3">Head of Education</p>
+                <p className="text-xs text-slate-200">
                   Curriculum specialist ensuring quality learning experiences
                 </p>
               </Card>
@@ -189,7 +185,7 @@ export default function AboutPage() {
 
         {/* CTA Section */}
         <section
-          className={`flex justify-center  py-16 md:py-24 bg-[${themeColor.lBlue}] text-primary-foreground`}
+          className={`flex justify-center px-5 lg:px-0 py-16 md:py-24 bg-[${themeColor.lBlue}] text-primary-foreground`}
         >
           <div className="container text-center max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">

@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import Link from "next/link";
-import { useEffect, useState, useTransition, useMemo } from "react";
+import { useState, useTransition, useMemo } from "react";
 import { TutorCardSkeleton } from "./TutorCardSkeleton";
 
 interface Category {
@@ -45,6 +45,7 @@ interface TutorsClientProps {
     rating?: string;
     price?: string;
     search?: string;
+    page?: string;
   };
 }
 
@@ -64,6 +65,7 @@ export function TutorsClient({
     rating: searchParams.rating || "all",
     price: searchParams.price ? parseInt(searchParams.price) : 500, // ✅ Match max value
     search: searchParams.search || "",
+    page: searchParams.page || "1",
   };
 
   // Combine initial + remaining tutors
@@ -212,7 +214,7 @@ export function TutorsClient({
                   </label>
                   <Slider
                     min={0}
-                    max={500} // ✅ Increase max based on your data
+                    max={150} // ✅ Increase max based on your data
                     step={10}
                     value={[filters.price]}
                     onValueChange={(value) =>
@@ -268,7 +270,7 @@ export function TutorsClient({
             >
               <div className="grid md:grid-cols-2 gap-0">
                 {/* Image Section */}
-                <div className="relative h-64 md:h-full min-h-[300px] bg-muted">
+                <div className="relative h-64 md:h-full min-h-[150px] bg-muted">
                   {tutor.image ? (
                     <img
                       src={tutor.image}

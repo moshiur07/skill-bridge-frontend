@@ -11,9 +11,12 @@ export default async function TutorProfilePage({
   const { id } = await params;
 
   // Fetch tutor profile from API
-  const response = await fetch(`http://localhost:5000/api/tutor/${id}`, {
-    cache: "no-store",
-  });
+  const response = await fetch(
+    `${process.env.BACKEND_PUBLIC_URL}/api/tutor/${id}`,
+    {
+      cache: "no-store",
+    },
+  );
 
   if (!response.ok) {
     notFound();
@@ -154,9 +157,12 @@ export async function generateMetadata({ params }: TutorProfilePageProps) {
   const { id } = await params;
 
   try {
-    const response = await fetch(`http://localhost:5000/api/tutor/${id}`, {
-      cache: "no-store",
-    });
+    const response = await fetch(
+      `${process.env.BACKEND_PUBLIC_URL}/api/tutor/${id}`,
+      {
+        cache: "no-store",
+      },
+    );
 
     if (!response.ok) {
       return {

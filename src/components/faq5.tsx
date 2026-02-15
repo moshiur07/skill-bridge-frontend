@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 
 import { Badge } from "@/components/ui/badge";
+import { BackgroundGradient } from "./ui/background-gradient";
 
 export interface FaqItem {
   question: string;
@@ -46,16 +47,6 @@ export const skillBridgeFaqs: FaqItem[] = [
       "SkillBridge is an online tutoring platform that connects students with expert tutors across various subjects. Whether you need help with mathematics, programming, languages, or any other subject, SkillBridge makes it easy to find qualified tutors, book sessions, and learn at your own pace.",
   },
   {
-    question: "How does SkillBridge work?",
-    answer:
-      "SkillBridge works in three simple steps: First, browse our tutors by subject, rating, or price. Second, select an available time slot that fits your schedule. Third, book your session and connect with your tutor online. You can manage all your bookings, leave reviews, and track your learning progress through your dashboard.",
-  },
-  {
-    question: "Is SkillBridge free to use?",
-    answer:
-      "Creating an account and browsing tutors on SkillBridge is completely free. You only pay when you book a tutoring session. Each tutor sets their own hourly rate, which is clearly displayed on their profile. There are no hidden fees or subscription charges.",
-  },
-  {
     question: "What subjects can I learn on SkillBridge?",
     answer:
       "SkillBridge offers tutoring in a wide range of subjects including Mathematics, Physics, Chemistry, Biology, Computer Science, Web Development, Data Science, English Literature, Foreign Languages, Economics, History, Psychology, Graphic Design, Digital Marketing, and many more. You can filter tutors by category to find the perfect match for your learning needs.",
@@ -88,28 +79,30 @@ const Faq5 = ({
         className,
       )}
     >
-      <div className="container py-10 border  rounded-4xl shadow-2xs shadow-[#FDD023]">
-        <div className="text-center">
-          <Badge className="text-xs font-medium">{badge}</Badge>
-          <h1 className="mt-4 text-4xl font-semibold">{heading}</h1>
-          <p className="mt-6  font-medium text-white">{description}</p>
-        </div>
-        <div className="mx-auto mt-14 max-w-xl">
-          {faqs.map((faq, index) => (
-            <div key={index} className="mb-8 flex gap-4">
-              <span className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-secondary  text-primary">
-                {index + 1}
-              </span>
-              <div>
-                <div className="mb-2 flex items-center justify-between">
-                  <h3 className="font-medium text-xl">{faq.question}</h3>
+      <BackgroundGradient className="">
+        <div className="px-28    rounded-4xl shadow-2xs ">
+          <div className="text-center py-5">
+            <Badge className="text-xs font-medium">{badge}</Badge>
+            <h1 className="mt-4 text-4xl font-semibold">{heading}</h1>
+            <p className="mt-6  font-medium text-white">{description}</p>
+          </div>
+          <div className="mx-auto mt-14 max-w-xl">
+            {faqs.map((faq, index) => (
+              <div key={index} className="mb-8 flex gap-4">
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-sm bg-secondary  text-primary">
+                  {index + 1}
+                </span>
+                <div>
+                  <div className="mb-2 flex items-center justify-between">
+                    <h3 className="font-medium text-xl">{faq.question}</h3>
+                  </div>
+                  <p className="text-[#FCECAE]">{faq.answer}</p>
                 </div>
-                <p className="text-[#FCECAE]">{faq.answer}</p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </BackgroundGradient>
     </section>
   );
 };
