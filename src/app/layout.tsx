@@ -20,8 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={ubuntu.className}>
-      <body>{children}</body>
-      <Toaster richColors />
+      <body>
+        {children}
+        <Toaster richColors />
+      </body>
     </html>
   );
 }

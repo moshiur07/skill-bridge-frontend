@@ -39,9 +39,6 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const signUpWithEmail = () => {
-    console.log("got clicked!");
-  };
   const form = useForm({
     defaultValues: {
       name: "",

@@ -1,6 +1,6 @@
 import AboutFeatureds from "@/components/about3";
 import { Faq5 } from "@/components/faq5";
-import HeroBanner from "@/components/home/hero";
+import HeroBanner from "@/components/modules/home/hero";
 
 import Testimonial01 from "@/components/shadcn-space/blocks/testimonial-02/testimonial";
 

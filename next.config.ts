@@ -16,6 +16,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/auth/:path*",
+        destination:
+          "https://skill-bridge-backend-myyv.onrender.com/api/auth/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

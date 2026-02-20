@@ -1,5 +1,5 @@
 import { themeColor } from "@/components/helper/colorValue";
-import { TutorsClient } from "@/components/Tutors/TutorsClient";
+import { TutorsClient } from "@/components/modules/Tutors/TutorsClient";
 
 // This is the Server Component - fetches initial data
 export default async function TutorsPage({
@@ -37,7 +37,7 @@ export default async function TutorsPage({
   }
 
   const initialData = await fetch(
-    `${process.env.BACKEND_PUBLIC_URL}/api/tutor?${queryParams.toString()}`,
+    `${process.env.BACKEND_URL}/api/tutor?${queryParams.toString()}`,
     {
       cache: "no-store",
     },

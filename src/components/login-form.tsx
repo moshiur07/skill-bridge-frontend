@@ -1,25 +1,76 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { toast } from "sonner";
+import { authClient } from "@/lib/auth-client";
+import { useForm } from "@tanstack/react-form";
+import * as z from "zod";
 
+const formSchema = z.object({
+  password: z.string().min(6, "Password should 6 character or above!"),
+  email: z.string().min(6, "Please enter a valid email!"),
+});
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const form = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    validators: {
+      onSubmit: formSchema,
+    },
+    onSubmit: async ({ value }) => {
+      console.log(value);
+      const toastID = toast.loading("Login User...", {
+        position: "top-center",
+      });
+      try {
+        const { data, error } = await authClient.signIn.email(value);
+        if (error) {
+          toast.error(error.message, { id: toastID, position: "top-center" });
+        }
+        if (data) {
+          toast.success(`Welcome Back to skillBridge!`, {
+            id: toastID,
+            position: "top-center",
+            duration: 5000,
+          });
+        }
+      } catch (error: any) {
+        toast.error("Internal Server error...", {
+          id: toastID,
+          position: "top-center",
+          description: `${error.message}`,
+        });
+      }
+    },
+  });
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              form.handleSubmit();
+            }}
+            className="p-6 md:p-8"
+          >
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Welcome back</h1>
@@ -27,33 +78,58 @@ export function LoginForm({
                   Login to your Acme Inc account
                 </p>
               </div>
-              <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                  className="bg-slate-50"
-                />
-              </Field>
-              <Field>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <a
-                    href="#"
-                    className="ml-auto text-sm underline-offset-2 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-                <Input
-                  id="password"
-                  type="password"
-                  required
-                  className="bg-slate-50"
-                />
-              </Field>
+
+              {/* email */}
+              <form.Field
+                name="email"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field>
+                      <FieldLabel htmlFor="email">Email</FieldLabel>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="m@example.com"
+                        required
+                        className="bg-slate-50"
+                        value={field.state.value}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
+
+              {/* password */}
+              <form.Field
+                name="password"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field>
+                      <FieldLabel htmlFor="password">Password</FieldLabel>
+                      <Input
+                        id="password"
+                        type="password"
+                        placeholder="password"
+                        required
+                        className="bg-slate-50"
+                        value={field.state.value}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
               <Field>
                 <Button type="submit">Login</Button>
               </Field>

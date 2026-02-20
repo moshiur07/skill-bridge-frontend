@@ -17,8 +17,11 @@ import Image from "next/image";
 import { themeColor } from "@/components/helper/colorValue";
 import AboutFeatureds from "@/components/about3";
 import Link from "next/link";
+import { userService } from "@/components/services/user.service";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { data } = await userService.getSession();
+  console.log("session from aboutpage", data);
   return (
     <div
       className={`flex justify-center mx-auto bg-linear-150 from-[${themeColor.dBlue}] via-[${themeColor.vanilla}] to-[${themeColor.dYellow}]`}

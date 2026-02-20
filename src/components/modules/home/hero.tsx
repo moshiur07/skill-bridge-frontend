@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { Button } from "../ui/button";
 import Link from "next/link";
-import { NoiseBackground } from "../ui/noise-background";
+import { NoiseBackground } from "@/components/ui/noise-background";
+import { Button } from "@/components/ui/button";
 
 const HeroBanner = () => {
   return (
