@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const ubuntu = Ubuntu({
   weight: ["300", "400", "500", "700"],
@@ -18,8 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={ubuntu.className}>
+    <html lang="en" suppressHydrationWarning className={ubuntu.className}>
       <body>{children}</body>
+      <Toaster richColors />
     </html>
   );
 }
