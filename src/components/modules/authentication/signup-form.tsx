@@ -65,6 +65,7 @@ export function SignupForm({
             position: "top-center",
             duration: 5000,
           });
+          window.location.href = "/login";
         }
       } catch (error: any) {
         toast.error("Internal Server error...", {

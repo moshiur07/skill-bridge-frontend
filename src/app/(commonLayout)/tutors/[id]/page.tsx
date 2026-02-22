@@ -4,6 +4,7 @@ import { TutorProfilePageProps, ApiResponse } from "@/Types/schemaTypes";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { themeColor } from "@/components/helper/colorValue";
+import { NoiseBackground } from "@/components/ui/noise-background";
 
 export default async function TutorProfilePage({
   params,
@@ -29,9 +30,9 @@ export default async function TutorProfilePage({
   console.log(themeColor.vanilla);
   return (
     <section
-      className={`flex justify-center mx-auto bg-linear-to-br from-[${themeColor.dBlue}] via-[${themeColor.dYellow}] to-[${themeColor.vanilla}]`}
+      className={`flex justify-center mx-auto bg-linear-to-br from-[${themeColor.lBlue}] to-[${themeColor.dBlue}]`}
     >
-      <div className="min-h-screen py-16 md:py-24">
+      <div className="min-h-screen py-16 md:py-24 text-white">
         <div className="container">
           {/* Hero Section */}
           <div className="mb-16">
@@ -105,9 +106,7 @@ export default async function TutorProfilePage({
                 {/* Bio */}
                 <div className="mb-8">
                   <h2 className="text-xl font-semibold mb-3">About</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {tutor.bio}
-                  </p>
+                  <p className="text-slate-200 leading-relaxed">{tutor.bio}</p>
                 </div>
 
                 {/* Expertise */}
@@ -122,7 +121,7 @@ export default async function TutorProfilePage({
                         >
                           <h3 className="font-semibold">{category.name}</h3>
                           {category.description && (
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-slate-200">
                               {category.description}
                             </p>
                           )}
@@ -133,9 +132,11 @@ export default async function TutorProfilePage({
                 )}
 
                 <Link href={`/booking/${tutor.id}`}>
-                  <Button className="w-full py-6 text-black hover:text-white hover:cursor-pointer text-[18px] mt-3 bg-[#FDD023]">
-                    Book Now
-                  </Button>
+                  <NoiseBackground>
+                    <Button className="w-full py-6 text-black hover:text-white hover:cursor-pointer text-[18px]  bg-[#FDD023]">
+                      Book Now
+                    </Button>
+                  </NoiseBackground>
                 </Link>
               </div>
             </div>

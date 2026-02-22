@@ -63,7 +63,7 @@ export function TutorsClient({
   const filters = {
     category: searchParams.category || "all",
     rating: searchParams.rating || "all",
-    price: searchParams.price ? parseInt(searchParams.price) : 500, // ✅ Match max value
+    price: searchParams.price ? parseInt(searchParams.price) : 200,
     search: searchParams.search || "",
     page: searchParams.page || "1",
   };
@@ -129,7 +129,7 @@ export function TutorsClient({
   return (
     <>
       {/* Filter Section */}
-      <div className="mb-12">
+      <div className="mb-12 bg-slate-300 rounded-4xl">
         <Card className="p-6">
           {/* Mobile Filter Toggle */}
           <div className="flex items-center justify-between mb-6 lg:hidden">
@@ -263,19 +263,19 @@ export function TutorsClient({
           {filteredTutors.map((tutor, index) => (
             <Card
               key={`${tutor.id}-${index}`}
-              className="overflow-hidden hover:shadow-lg transition-shadow duration-300"
+              className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-slate-300 "
               style={{
                 animation: `fadeIn 0.5s ease-out ${index * 0.1}s both`,
               }}
             >
               <div className="grid md:grid-cols-2 gap-0">
                 {/* Image Section */}
-                <div className="relative h-64 md:h-full min-h-[150px] bg-muted">
+                <div className="relative h-64 md:h-full ">
                   {tutor.image ? (
                     <img
                       src={tutor.image}
                       alt={tutor?.user?.name || "Tutor"}
-                      className="h-full w-full object-cover"
+                      className="max-h-120 w-full "
                     />
                   ) : (
                     <div className="h-full w-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
