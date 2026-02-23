@@ -27,7 +27,6 @@ export default async function TutorProfilePage({
   }
 
   const tutor = result.data;
-  console.log(themeColor.vanilla);
   return (
     <section
       className={`flex justify-center mx-auto bg-linear-to-br from-[${themeColor.lBlue}] to-[${themeColor.dBlue}]`}

@@ -6,6 +6,7 @@ import { userService } from "./components/services/user.service";
 export async function proxy(request: NextRequest) {
   let isAuthenticated = false;
   let isAdmin = false;
+  let isTutor = false;
 
   const pathName = request.url;
   console.log(request.url);
@@ -13,24 +14,47 @@ export async function proxy(request: NextRequest) {
 
   if (data) {
     isAuthenticated = true;
-    isAdmin = data.user.role == "ADMIN";
+    isAdmin = data.user.role == "admin";
+    isTutor = data.user.role == "tutor";
   }
 
   if (!isAuthenticated) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (isAdmin && pathName.startsWith("/dashboard")) {
+  if (isAdmin && pathName.startsWith("/student-dashboard")) {
     return NextResponse.redirect(new URL("/admin-dashboard", request.url));
   }
 
-  if (!isAdmin && pathName.startsWith("/admin-dashboard")) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  if (isAdmin && pathName.startsWith("/tutor-dashboard")) {
+    return NextResponse.redirect(new URL("/admin-dashboard", request.url));
   }
 
+  if (!isAdmin && isTutor && pathName.startsWith("/admin-dashboard")) {
+    return NextResponse.redirect(new URL("/tutor-dashboard", request.url));
+  }
+
+  if (!isAdmin && isTutor && pathName.startsWith("/student-dashboard")) {
+    return NextResponse.redirect(new URL("/tutor-dashboard", request.url));
+  }
+
+  if (!isAdmin && !isTutor && pathName.startsWith("/admin-dashboard")) {
+    return NextResponse.redirect(new URL("/student-dashboard", request.url));
+  }
+  if (!isAdmin && !isTutor && pathName.startsWith("/tutor-dashboard")) {
+    return NextResponse.redirect(new URL("/student-dashboard", request.url));
+  }
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard"],
+  matcher: [
+    "/booking/:path*",
+    "/tutor-dashboard",
+    "/tutor-dashboard/:path*",
+    "/student-dashboard",
+    "/student-dashboard/:path*",
+    "/admin-dashboard",
+    "/admin-dashboard/:path*",
+  ],
 };
