@@ -8,14 +8,13 @@ export async function proxy(request: NextRequest) {
   let isAdmin = false;
   let isTutor = false;
 
-  const pathName = request.url;
-  console.log(request.url);
+  const pathName = request.nextUrl.pathname;
   const { data } = await userService.getSession();
 
   if (data) {
     isAuthenticated = true;
-    isAdmin = data.user.role == "admin";
-    isTutor = data.user.role == "tutor";
+    isAdmin = data.user.role === "admin";
+    isTutor = data.user.role === "tutor";
   }
 
   if (!isAuthenticated) {

@@ -5,28 +5,31 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { themeColor } from "@/components/helper/colorValue";
 import { NoiseBackground } from "@/components/ui/noise-background";
+import { userService } from "@/components/services/user.service";
 
 export default async function TutorProfilePage({
   params,
 }: TutorProfilePageProps) {
   const { id } = await params;
 
-  // Fetch tutor profile from API
-  const response = await fetch(`${process.env.BACKEND_URL}/api/tutor/${id}`, {
-    cache: "no-store",
-  });
+  // // Fetch tutor profile from API
+  // const response = await fetch(`${process.env.BACKEND_URL}/api/tutors/${id}`, {
+  //   cache: "no-store",
+  // });
 
-  if (!response.ok) {
-    notFound();
-  }
+  // if (!response.ok) {
+  //   notFound();
+  // }
 
-  const result: ApiResponse = await response.json();
+  // const result: ApiResponse = await response.json();
 
-  if (!result.success || !result.data) {
-    notFound();
-  }
+  // if (!result.success || !result.data) {
+  //   notFound();
+  // }
 
-  const tutor = result.data;
+  const result = await userService.getSingleTutor(id);
+
+  const tutor = result?.data?.data;
   return (
     <section
       className={`flex justify-center mx-auto bg-linear-to-br from-[${themeColor.lBlue}] to-[${themeColor.dBlue}]`}
@@ -91,7 +94,7 @@ export default async function TutorProfilePage({
 
                   {/* Categories */}
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {tutor.categories.map((category) => (
+                    {tutor.categories.map((category: any) => (
                       <span
                         key={category.id}
                         className="px-4 py-2 bg-secondary text-secondary-foreground rounded-full text-sm font-medium"
@@ -113,7 +116,7 @@ export default async function TutorProfilePage({
                   <div className="mb-8">
                     <h2 className="text-xl font-semibold mb-3">Expertise</h2>
                     <div className="space-y-3">
-                      {tutor.categories.map((category) => (
+                      {tutor.categories.map((category: any) => (
                         <div
                           key={category.id}
                           className="border-l-4 border-primary pl-4"
@@ -149,31 +152,34 @@ export default async function TutorProfilePage({
   );
 }
 
-// Generate metadata for SEO
-export async function generateMetadata({ params }: TutorProfilePageProps) {
-  const { id } = await params;
+// // Generate metadata for SEO
+// export async function generateMetadata({ params }: TutorProfilePageProps) {
+//   const { id } = await params;
 
-  try {
-    const response = await fetch(`${process.env.BACKEND_URL}/api/tutor/${id}`, {
-      cache: "no-store",
-    });
+//   try {
+//     const response = await fetch(
+//       `${process.env.BACKEND_URL}/api/tutors/${id}`,
+//       {
+//         cache: "no-store",
+//       },
+//     );
 
-    if (!response.ok) {
-      return {
-        title: "Tutor Not Found",
-      };
-    }
+//     if (!response.ok) {
+//       return {
+//         title: "Tutor Not Found",
+//       };
+//     }
 
-    const result: ApiResponse = await response.json();
-    const tutor = result.data;
+//     const result: ApiResponse = await response.json();
+//     const tutor = result.data;
 
-    return {
-      title: `${tutor.user.name} - ${tutor.categories.map((c) => c.name).join(", ")} Tutor`,
-      description: tutor.bio.substring(0, 160),
-    };
-  } catch (error) {
-    return {
-      title: "Tutor Profile",
-    };
-  }
-}
+//     return {
+//       title: `${tutor.user.name} - ${tutor.categories.map((c) => c.name).join(", ")} Tutor`,
+//       description: tutor.bio.substring(0, 160),
+//     };
+//   } catch (error) {
+//     return {
+//       title: "Tutor Profile",
+//     };
+//   }
+// }

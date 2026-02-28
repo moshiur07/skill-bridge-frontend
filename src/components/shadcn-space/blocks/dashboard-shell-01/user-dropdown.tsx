@@ -14,9 +14,6 @@ import {
 import {
   LucideIcon,
   CircleUserRound,
-  CreditCard,
-  ReceiptText,
-  Settings,
   LogOut,
   LayoutDashboard,
 } from "lucide-react";
@@ -37,7 +34,6 @@ type MenuItem = {
 };
 
 const PROFILE_ITEMS: MenuItem[] = [
-  { label: "My Profile", icon: CircleUserRound },
   { label: "My Dashboard", icon: LayoutDashboard },
 ];
 
@@ -56,6 +52,12 @@ const logOutUser = async () => {
 };
 
 const UserDropdown = ({ user, trigger, defaultOpen, align = "end" }: Props) => {
+  const dashboardHref =
+    user?.role === "admin"
+      ? "/admin-"
+      : user?.role === "tutor"
+        ? "/tutor-"
+        : "/student-";
   return (
     <div className="flex items-center justify-center">
       <DropdownMenu defaultOpen={defaultOpen}>
@@ -71,7 +73,7 @@ const UserDropdown = ({ user, trigger, defaultOpen, align = "end" }: Props) => {
                 <AvatarImage
                   src={
                     user?.image
-                      ? `${user.image}`
+                      ? `${user?.image}`
                       : "https://images.shadcnspace.com/assets/profiles/user-11.jpg"
                   }
                   alt={user?.name}
@@ -99,7 +101,9 @@ const UserDropdown = ({ user, trigger, defaultOpen, align = "end" }: Props) => {
               <DropdownMenuItem key={label} className={itemClass}>
                 <Icon size={20} />
 
-                <Link href={`/${label.split(" ")[1].toLowerCase()}`}>
+                <Link
+                  href={`${dashboardHref}${label.split(" ")[1].toLowerCase()}`}
+                >
                   <span>{label}</span>
                 </Link>
               </DropdownMenuItem>

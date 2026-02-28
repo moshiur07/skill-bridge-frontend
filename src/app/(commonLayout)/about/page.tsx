@@ -21,7 +21,6 @@ import { userService } from "@/components/services/user.service";
 
 export default async function AboutPage() {
   const { data } = await userService.getSession();
-  console.log("session from aboutpage", data);
   return (
     <div
       className={`flex justify-center mx-auto bg-linear-150 from-[${themeColor.dBlue}] via-[${themeColor.vanilla}] to-[${themeColor.dYellow}]`}

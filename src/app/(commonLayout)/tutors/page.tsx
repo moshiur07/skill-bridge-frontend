@@ -1,5 +1,6 @@
 import { themeColor } from "@/components/helper/colorValue";
 import { TutorsClient } from "@/components/modules/Tutors/TutorsClient";
+import { userService } from "@/components/services/user.service";
 
 // This is the Server Component - fetches initial data
 export default async function TutorsPage({
@@ -13,12 +14,8 @@ export default async function TutorsPage({
     page?: string;
   }>;
 }) {
-  // ✅ Await searchParams in Next.js 15+
   const params = await searchParams;
-  console.log("params:", params);
-  // Build query params with filters
   const queryParams = new URLSearchParams();
-  console.log("queryparams", queryParams);
   if (params.category) {
     queryParams.append("category", params.category);
   }
@@ -35,16 +32,7 @@ export default async function TutorsPage({
   if (params.page) {
     queryParams.append("page", params.page);
   }
-
-  const initialData = await fetch(
-    `${process.env.BACKEND_URL}/api/tutor?${queryParams.toString()}`,
-    {
-      cache: "no-store",
-    },
-  );
-
-  const initialTutors = await initialData.json();
-  console.log(initialTutors);
+  const initialTutors = await userService.getAllTutors();
   return (
     <section
       className={`flex justify-center mx-auto bg-linear-150 from-[${themeColor.dBlue}] via-[${themeColor.vanilla}] to-[${themeColor.dYellow}]`}
@@ -64,7 +52,7 @@ export default async function TutorsPage({
 
           {/* Client Component handles all interactivity */}
           <TutorsClient
-            initialTutors={initialTutors.data || []}
+            initialTutors={initialTutors?.data?.data || []}
             searchParams={params}
           />
         </div>

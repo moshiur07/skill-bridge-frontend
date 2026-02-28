@@ -21,7 +21,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "@/components/ui/select";
 import { useForm } from "@tanstack/react-form";
 
 import * as z from "zod";
@@ -50,7 +50,6 @@ export function SignupForm({
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
       const toastID = toast.loading("Creating User...", {
         position: "top-center",
       });

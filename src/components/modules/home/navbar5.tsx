@@ -7,11 +7,9 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import {
@@ -34,6 +32,12 @@ interface Navbar5Props {
 const Navbar5 = ({ className, session }: Navbar5Props) => {
   const user = session?.data?.user;
 
+  const dashboardHref =
+    user?.role === "admin"
+      ? "/admin-dashboard"
+      : user?.role === "tutor"
+        ? "/tutor-dashboard"
+        : "/student-dashboard";
   return (
     <section className={cn("relative", className)}>
       <div className=" z-10  w-full py-4 fixed top-0 left-0  bg-opacity-50 backdrop-blur-lg  transition-all duration-300 ease-in-out bg-white/0">
@@ -71,7 +75,7 @@ const Navbar5 = ({ className, session }: Navbar5Props) => {
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink
-                  href="/dashboard"
+                  href={dashboardHref}
                   className={`${navigationMenuTriggerStyle()}relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:w-full after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100`}
                 >
                   Dashboard
@@ -155,19 +159,37 @@ const Navbar5 = ({ className, session }: Navbar5Props) => {
                     About
                   </Link>
                   <Link
-                    href={"/dashboard"}
+                    href={dashboardHref}
                     className="flex items-center gap-2 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:w-full after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100"
                   >
                     Dashboard
                   </Link>
                 </div>
                 <div className="mt-6 flex flex-col gap-4">
-                  <Link
-                    href={"/login"}
-                    className="bg-transparent text-xl hover:bg-transparent hover:text-black relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:w-full after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100"
-                  >
-                    Log in
-                  </Link>
+                  {session.data ? (
+                    <div className="flex items-center gap-3 text-white">
+                      {" "}
+                      <div>{user?.name}</div>
+                      <Avatar className="size-8 cursor-pointer">
+                        <AvatarImage
+                          src={
+                            user?.image
+                              ? `${user.image}`
+                              : "https://images.shadcnspace.com/assets/profiles/user-11.jpg"
+                          }
+                          alt="User"
+                        />
+                        <AvatarFallback>DM</AvatarFallback>
+                      </Avatar>
+                    </div>
+                  ) : (
+                    <Link
+                      href={"/login"}
+                      className="bg-transparent text-xl hover:bg-transparent text-white hover:text-black relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:w-full after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100"
+                    >
+                      Log in
+                    </Link>
+                  )}
                 </div>
               </div>
             </SheetContent>

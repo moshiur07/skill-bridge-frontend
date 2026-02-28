@@ -1,11 +1,25 @@
-"use client"
+"use client";
 
 import { ChevronRight } from "lucide-react";
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
-import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton } from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@/components/ui/collapsible";
+import {
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
+} from "@/components/ui/sidebar";
 import { NavItem } from "@/components/shadcn-space/blocks/dashboard-shell-01/app-sidebar";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export function NavMain({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
@@ -38,7 +52,9 @@ export function NavMain({ items }: { items: NavItem[] }) {
                       {item.icon && <item.icon size={16} />}
                       <span>{item.title}</span>
                       <ChevronRight className="ml-auto transition-transform duration-200 collapsible/button-[aria-expanded='true']:rotate-90" />
-                    </SidebarMenuButton>} className="w-full collapsible/button"
+                    </SidebarMenuButton>
+                  }
+                  className="w-full collapsible/button"
                 />
                 <CollapsibleContent>
                   <SidebarMenuSub className="me-0 pe-0">
@@ -59,12 +75,17 @@ export function NavMain({ items }: { items: NavItem[] }) {
             <SidebarMenuItem>
               <SidebarMenuButton
                 tooltip={item.title}
-                className={cn("rounded-lg text-sm px-3 py-2 h-9 ", pathname === item.href ? "bg-primary hover:bg-primary dark:bg-blue-500 text-white dark:hover:bg-blue-500 hover:text-white" : "")}
+                className={cn(
+                  "rounded-lg text-sm px-3 py-2 h-9 ",
+                  pathname === item.href
+                    ? "bg-primary hover:bg-primary dark:bg-blue-500 text-white dark:hover:bg-blue-500 hover:text-white"
+                    : "",
+                )}
               >
                 {item.icon && <item.icon />}
-                <a href={item.href} className="w-full">
+                <Link href={item.href} className="w-full">
                   {item.title}
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

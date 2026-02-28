@@ -34,7 +34,6 @@ export function LoginForm({
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
       const toastID = toast.loading("Login User...", {
         position: "top-center",
       });

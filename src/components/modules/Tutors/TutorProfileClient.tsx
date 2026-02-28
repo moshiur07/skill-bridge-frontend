@@ -24,19 +24,7 @@ export function TutorProfileClient({
   const [selectedAvailability, setSelectedAvailability] = useState<
     string | null
   >(null);
-
-  // Group schedules by day
-  const schedulesByDay = tutor.schedules.reduce(
-    (acc, schedule) => {
-      const day = schedule.day_of_week;
-      if (!acc[day]) {
-        acc[day] = [];
-      }
-      acc[day].push(schedule);
-      return acc;
-    },
-    {} as Record<number, Schedule[]>,
-  );
+  console.log({ tutor, tutorId });
 
   // Sort availabilities by date
   const sortedAvailabilities = [...tutor.availabilities].sort((a, b) => {
@@ -61,32 +49,31 @@ export function TutorProfileClient({
     <div className="space-y-12">
       {/* Tabs Section */}
       <Tabs defaultValue="availability" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-grid">
+        <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:inline-grid">
           <TabsTrigger value="availability" className="gap-2">
             <Calendar className="h-4 w-4" />
             Availability
           </TabsTrigger>
-          <TabsTrigger value="schedule" className="gap-2">
-            <Clock className="h-4 w-4" />
-            Weekly Schedule
-          </TabsTrigger>
           <TabsTrigger value="reviews" className="gap-2">
             <Star className="h-4 w-4" />
-            Reviews ({tutor.bookings.length})
+            Reviews ({tutor.bookings?.length})
           </TabsTrigger>
         </TabsList>
 
         {/* Availability Tab */}
-        <TabsContent value="availability" className="mt-8">
-          <div className="space-y-6">
+        <TabsContent
+          value="availability"
+          className="mt-8 bg-slate-400 rounded-xl shadow-2xl shadow-slate-700"
+        >
+          <div className="space-y-6 pl-5">
             <div>
-              <h2 className="text-2xl font-bold mb-2">Book a Session</h2>
+              <h2 className="text-2xl font-bold pt-3 mb-2">Book a Session</h2>
               <p className="text-muted-foreground">
                 Choose an available time slot to book a tutoring session
               </p>
             </div>
 
-            {availableSlots.length === 0 ? (
+            {availableSlots?.length === 0 ? (
               <Card className="p-12 text-center">
                 <Calendar className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
                 <h3 className="text-xl font-semibold mb-2">
@@ -100,7 +87,7 @@ export function TutorProfileClient({
               </Card>
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {availableSlots.map((slot) => {
+                {availableSlots?.map((slot) => {
                   const startDate = new Date(slot.start_date_time);
                   const endDate = new Date(slot.end_date_time);
                   const duration =
@@ -158,102 +145,53 @@ export function TutorProfileClient({
           </div>
         </TabsContent>
 
-        {/* Weekly Schedule Tab */}
-        <TabsContent value="schedule" className="mt-8">
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold mb-2">Weekly Schedule</h2>
-              <p className="text-muted-foreground">
-                Regular availability throughout the week
-              </p>
-            </div>
-
-            {tutor.schedules.length === 0 ? (
-              <Card className="p-12 text-center">
-                <Clock className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-xl font-semibold mb-2">
-                  No Regular Schedule
-                </h3>
-                <p className="text-muted-foreground">
-                  This tutor has not set up a regular weekly schedule yet.
-                </p>
-              </Card>
-            ) : (
-              <div className="grid gap-4">
-                {DAYS_OF_WEEK.map((dayName, dayIndex) => {
-                  const daySchedules = schedulesByDay[dayIndex];
-
-                  if (!daySchedules || daySchedules.length === 0) {
-                    return null;
-                  }
-
-                  return (
-                    <Card key={dayIndex} className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="min-w-32">
-                          <h3 className="font-semibold text-lg">{dayName}</h3>
-                        </div>
-                        <div className="flex-1 space-y-2">
-                          {daySchedules.map((schedule) => (
-                            <div
-                              key={schedule.id}
-                              className="flex items-center justify-between p-3 bg-secondary/50 rounded-lg"
-                            >
-                              <div className="flex items-center gap-2">
-                                <Clock className="h-4 w-4 text-muted-foreground" />
-                                <span className="font-medium">
-                                  {schedule.start_time} - {schedule.end_time}
-                                </span>
-                              </div>
-                              <Badge variant="secondary">Available</Badge>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </Card>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </TabsContent>
-
         {/* Reviews Tab */}
-        <TabsContent value="reviews" className="mt-8">
-          <div className="space-y-6">
+        <TabsContent
+          value="reviews"
+          className="mt-8 bg-slate-400 rounded-xl shadow-2xl shadow-slate-700"
+        >
+          <div className="space-y-6 py-8 px-5">
             <div>
-              <h2 className="text-2xl font-bold mb-2">Student Reviews</h2>
-              <p className="text-muted-foreground">
+              <h2 className="text-2xl text-black font-bold mb-2">
+                Student Reviews
+              </h2>
+              <p className="text-black">
                 See what students say about {tutor.user.name}
               </p>
             </div>
 
-            {tutor.bookings.length === 0 ? (
-              <Card className="p-12 text-center">
-                <Star className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+            {tutor?.bookings?.length === 0 ? (
+              <Card className="p-12 text-center shadow-2xl">
+                <Star className="h-16 w-16 mx-auto mb-4 text-black" />
                 <h3 className="text-xl font-semibold mb-2">No Reviews Yet</h3>
-                <p className="text-muted-foreground">
+                <p className="text-black">
                   This tutor is new and has not received any reviews yet. Be the
                   first to book!
                 </p>
               </Card>
             ) : (
               <div className="grid gap-6">
-                {tutor.bookings.map((booking) => (
-                  <Card key={booking.id} className="p-6">
+                {tutor?.bookings?.map((booking) => (
+                  <Card
+                    key={booking.id}
+                    className="p-6 text-white bg-slate-600"
+                  >
                     <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="text-lg font-semibold text-primary">
-                          {booking.student.name.charAt(0)}
+                      <div
+                        className="flex-shrink-0 border-white
+                        border-2  w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center"
+                      >
+                        <span className="text-lg font-bold text-primary">
+                          {booking?.student?.name?.charAt(0)} sd
                         </span>
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="font-semibold">
-                            {booking.student.name}
+                            {booking?.student?.name}
                           </h4>
                           <div className="flex items-center gap-1">
-                            {[...Array(5)].map((_, i) => (
+                            {[...Array(5)]?.map((_, i) => (
                               <Star
                                 key={i}
                                 className={`h-4 w-4 ${
@@ -265,8 +203,8 @@ export function TutorProfileClient({
                             ))}
                           </div>
                         </div>
-                        <div className="text-sm text-muted-foreground mb-2">
-                          {new Date(booking.created_at).toLocaleDateString(
+                        <div className="text-sm text-white mb-2">
+                          {new Date(booking?.created_at).toLocaleDateString(
                             "en-US",
                             {
                               year: "numeric",
@@ -275,10 +213,10 @@ export function TutorProfileClient({
                             },
                           )}
                           {" • "}
-                          {booking.duration_hours} hour session
+                          {booking?.duration_hours} hour session
                         </div>
                         <Badge variant="secondary" className="mb-3">
-                          {booking.status}
+                          {booking?.status}
                         </Badge>
                         {/* Note: Review content would come from the Review model if populated */}
                       </div>
