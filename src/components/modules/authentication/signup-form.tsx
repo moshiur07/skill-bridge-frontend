@@ -257,6 +257,8 @@ export function SignupForm({
             <Image
               src="/undraw_sign-up_qamz.svg"
               alt="Image"
+              height={500}
+              width={500}
               className="absolute inset-0  w-full h-3/4 mx-auto  mt-20 dark:brightness-[0.2] dark:grayscale"
             />
           </div>

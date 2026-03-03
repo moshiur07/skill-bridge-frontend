@@ -66,7 +66,7 @@ const categorySchema = z.object({
 type CategoryFormData = z.infer<typeof categorySchema>;
 
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -75,8 +75,8 @@ export default function CategoriesPage() {
 
   // Dialog states
   const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-  const [deleteCategory, setDeleteCategory] = useState<Category | null>(null);
+  const [editingCategory, setEditingCategory] = useState(null);
+  const [deleteCategory, setDeleteCategory] = useState<any | null>(null);
   const [isFormLoading, setIsFormLoading] = useState(false);
 
   // Form
@@ -115,24 +115,15 @@ export default function CategoriesPage() {
     console.log({ createData: data });
     try {
       setIsFormLoading(true);
-      if (editingCategory) {
-        await adminCategoriesAPI.update(editingCategory.id, data);
-        setCategories(
-          categories.map((cat) =>
-            cat.id === editingCategory.id ? { ...cat, ...data } : cat,
-          ),
-        );
-      } else {
-        const res = await fetch(`${API_BASE}/api/admin/categories`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify(data),
-        });
-        const responseData = await res.json();
-        console.log({ responseData });
-        setCategories([...categories, responseData.data]);
-      }
+
+      const res = await fetch(`${API_BASE}/api/admin/categories`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(data),
+      });
+      const responseData = await res.json();
+      setCategories([...categories, responseData.data]);
 
       setShowCreateDialog(false);
       setEditingCategory(null);
@@ -372,7 +363,7 @@ export default function CategoriesPage() {
           <AlertDialogContent>
             <AlertDialogTitle>Delete Category</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete "{deleteCategory.name}"? This
+              Are you sure you want to delete "{deleteCategory?.name}"? This
               action cannot be undone.
             </AlertDialogDescription>
             <div className="flex gap-3 justify-end">

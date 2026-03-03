@@ -10,6 +10,7 @@ interface User {
 }
 
 interface Booking {
+  review: Review | null;
   id: string;
   total_price: number;
   status: string;
@@ -118,6 +119,17 @@ interface TutorProfilePageProps {
   params: Promise<{ id: string }>;
 }
 
+interface Review {
+  id: string;
+  rating: number;
+  comment: string;
+  created_at: string;
+  student: {
+    name: string;
+    email: string;
+  };
+}
+
 export type {
   User,
   Booking,
@@ -128,4 +140,5 @@ export type {
   TutorProfilePageProps,
   Category,
   ApiResponse,
+  Review,
 };

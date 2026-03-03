@@ -47,20 +47,17 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
-import { adminService } from "@/components/services/admin.service";
 
 export default function UsersPage() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<string>("all");
-  const [page, setPage] = useState(1);
   const [totalUsers, setTotalUsers] = useState(0);
 
   // Dialog states
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [actionType, setActionType] = useState<
     "ban" | "delete" | "feature" | null
   >(null);

@@ -16,15 +16,14 @@ import {
   SidebarMenuSubItem,
   SidebarMenuSubButton,
 } from "@/components/ui/sidebar";
-import { NavItem } from "@/components/shadcn-space/blocks/dashboard-shell-01/app-sidebar";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-export function NavMain({ items }: { items: NavItem[] }) {
+export function NavMain({ items }: { items: any[] }) {
   const pathname = usePathname();
   // Recursive render function
-  const renderItem = (item: NavItem) => {
+  const renderItem = (item: any) => {
     //  Section label
     if (item.isSection && item.label) {
       return (
@@ -44,6 +43,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
             <Collapsible>
               <SidebarMenuItem>
                 <CollapsibleTrigger
+                  asChild
                   render={
                     <SidebarMenuButton
                       tooltip={item.title}
@@ -95,7 +95,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
     return null;
   };
   // Recursive render function for sub-items
-  const renderItemSub = (item: NavItem) => {
+  const renderItemSub = (item: any) => {
     const hasChildren = !!item.children?.length;
     if (hasChildren && item.title) {
       return (

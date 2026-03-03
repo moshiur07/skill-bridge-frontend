@@ -51,10 +51,12 @@ export default async function TutorsPage({
           </div>
 
           {/* Client Component handles all interactivity */}
-          <TutorsClient
-            initialTutors={initialTutors?.data?.data || []}
-            searchParams={params}
-          />
+          <div className="px-8 lg:px-16">
+            <TutorsClient
+              initialTutors={initialTutors?.data?.data || []}
+              searchParams={params}
+            />
+          </div>
         </div>
       </div>
     </section>

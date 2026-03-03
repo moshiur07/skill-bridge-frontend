@@ -45,20 +45,6 @@ export function LoginForm({
         }
         console.log({ dataFromLogin: data });
         if (data) {
-          if (data?.user?.role === "tutor" && data?.user?.image == null) {
-            toast.success(
-              `Welcome Back to skillBridge Sir ${data?.user?.name}! `,
-              {
-                id: toastID,
-                position: "top-center",
-                duration: 10000,
-                description:
-                  "Please update your profile information with a Professional Image to become a verified tutor and  listed in our tutor directory. This will help students find you and book sessions with you. Thank you for being a part of our community!",
-              },
-            );
-            window.location.href = "/tutor-dashboard/profile";
-            return;
-          }
           toast.success(`Welcome Back to skillBridge!`, {
             id: toastID,
             position: "top-center",
@@ -190,6 +176,8 @@ export function LoginForm({
             <Image
               src="/undraw_access-account_aydp.svg"
               alt="Image"
+              height={500}
+              width={500}
               className="absolute inset-0 h-full w-full  dark:brightness-[0.2] dark:grayscale"
             />
           </div>

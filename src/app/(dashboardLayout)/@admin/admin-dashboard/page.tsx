@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { adminDashboardAPI, DashboardStats } from "@/lib/api/admin";
 import {
   Users,
   BookOpen,
@@ -20,7 +19,7 @@ import RecentActivityCard from "@/components/modules/Admin/RecentActivityCard";
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState(null);
+  const [stats, setStats] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

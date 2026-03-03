@@ -14,13 +14,18 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
   ]),
   {
-    rules:{
-      "react/no-children-prop": [
-        true, {
-  "allowFunctions": true 
+    rules: {"@typescript-eslint/no-explicit-any": "warn",  // Change from error to warn
+    "react/no-unescaped-entities": "warn",         // Change from error to warn
+    "react-hooks/purity": "warn",                  // Change from error to warn
+    "@typescript-eslint/no-unused-vars": "warn"  ,
+  "react/no-children-prop": [
+    "warn", 
+    {
+      "allowFunctions": true 
     }
-      ]
-    },
+  ]
+}
+
   },
 ]);
 

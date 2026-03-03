@@ -32,6 +32,8 @@ export default async function TutorProfilePage({
                     <Image
                       src={tutor.image}
                       alt={tutor.user.name}
+                      width={600}
+                      height={600}
                       className="w-full h-full object-cover"
                     />
                   ) : (

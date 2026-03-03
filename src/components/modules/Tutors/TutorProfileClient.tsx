@@ -26,7 +26,6 @@ export function TutorProfileClient({
   const [selectedAvailability, setSelectedAvailability] = useState<
     string | null
   >(null);
-  console.log({ tutor, tutorId });
 
   // Sort availabilities by time
   const sortedAvailabilities = [...(tutor?.availabilities || [])].sort(

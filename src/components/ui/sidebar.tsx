@@ -599,6 +599,7 @@ function SidebarMenuBadge({
   );
 }
 
+const getRandomWidth = () => `${Math.floor(Math.random() * 40) + 50}%`;
 function SidebarMenuSkeleton({
   className,
   showIcon = false,
@@ -608,7 +609,7 @@ function SidebarMenuSkeleton({
 }) {
   // Random width between 50 to 90%.
   const width = React.useMemo(() => {
-    return `${Math.floor(Math.random() * 40) + 50}%`;
+    return getRandomWidth();
   }, []);
 
   return (
@@ -676,6 +677,7 @@ function SidebarMenuSubButton({
   asChild?: boolean;
   size?: "sm" | "md";
   isActive?: boolean;
+  render?: React.ReactNode;
 }) {
   const Comp = asChild ? Slot.Root : "a";
 

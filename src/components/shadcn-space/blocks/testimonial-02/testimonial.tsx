@@ -92,15 +92,19 @@ export default function Testimonial01({
                   <CarouselItem key={index}>
                     <div className="grid grid-cols-12 gap-6 items-center">
                       <div className="lg:col-span-8 col-span-12 flex sm:flex-row flex-col sm:gap-10 gap-6 lg:pe-12">
-                        <div className="shrink-0 flex items-start">
+                        <div className="shrink-0 flex items-start ">
                           <Image
                             src="https://images.shadcnspace.com/assets/svgs/icon-quote.svg"
+                            height={100}
+                            width={100}
                             alt="muted quote"
                             className="dark:hidden"
                           />
                           <Image
                             src="https://images.shadcnspace.com/assets/svgs/icon-quote-white.svg"
                             alt="muted quote"
+                            height={100}
+                            width={100}
                             className="hidden dark:block"
                           />
                         </div>
@@ -123,8 +127,8 @@ export default function Testimonial01({
                           <Image
                             src={testimonial.image}
                             alt={testimonial.author}
-                            width={500}
-                            height={500}
+                            width={600}
+                            height={600}
                             className="w-full h-full object-cover"
                           />
                         </div>

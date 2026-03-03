@@ -275,6 +275,8 @@ export function TutorsClient({
                   {tutor.image ? (
                     <Image
                       src={tutor.image}
+                      height={170}
+                      width={200}
                       alt={tutor?.user?.name || "Tutor"}
                       className="max-h-120 w-full "
                     />
