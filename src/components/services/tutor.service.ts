@@ -1,13 +1,15 @@
 import { cookies } from "next/headers";
+import { userService } from "./user.service";
+
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 export const tutorServices = {
   getMyBookings: async function () {
     try {
-      const cookieStore = await cookies();
       const res = await fetch(`${API_BASE}/api/bookings/me`, {
         headers: {
-          Cookie: cookieStore.toString(),
+          "Content-Type": "application/json",
         },
+        credentials: "include",
       });
       const parsedData = await res.json();
       return { data: parsedData?.data, stats: parsedData?.stats, error: null };
@@ -21,13 +23,13 @@ export const tutorServices = {
       };
     }
   },
-  getBookingsById: async function (tutorId: string) {
+  getTutorById: async function (tutorId: string) {
     try {
-      const cookieStore = await cookies();
-      const res = await fetch(`${API_BASE}/api/bookings/tutors/${tutorId}`, {
+      const res = await fetch(`${API_BASE}/api/tutors/${tutorId}`, {
         headers: {
-          Cookie: cookieStore.toString(),
+          "Content-Type": "application/json",
         },
+        credentials: "include",
       });
       const parsedData = await res.json();
       return { data: parsedData?.data, stats: parsedData?.stats, error: null };
@@ -44,13 +46,12 @@ export const tutorServices = {
 
   setAvailability: async function (availability: any) {
     try {
-      const cookieStore = await cookies();
       const res = await fetch(`${API_BASE}/api/tutors/availability`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
         },
+        credentials: "include",
         body: JSON.stringify(availability),
       });
       const { data } = await res.json();
@@ -71,11 +72,11 @@ export const tutorServices = {
     try {
       const bookings = await tutorServices.getMyBookings();
       const tutorId = await bookings?.data[0]?.tutor_id;
+      const cookieStore = await cookies();
       if (tutorId) {
-        const cookieStore = await cookies();
         const res = await fetch(`${API_BASE}/api/tutors/${tutorId}`, {
           headers: {
-            Cookie: cookieStore.toString(),
+            cookie: cookieStore.toString(),
           },
         });
         const { data } = await res.json();
@@ -98,14 +99,14 @@ export const tutorServices = {
   getAvailability: async function () {
     try {
       const profile = await tutorServices.getTutorProfile();
-      const tutorId = profile?.data?.id; // TutorProfile.id ✓ not User.id
-      const cookieStore = await cookies();
+      const tutorId = profile?.data?.id;
       const res = await fetch(
         `${API_BASE}/api/tutors/${tutorId}/availability`,
         {
           headers: {
-            Cookie: cookieStore.toString(),
+            "Content-Type": "application/json",
           },
+          credentials: "include",
         },
       );
       const { data } = await res.json();
@@ -116,6 +117,29 @@ export const tutorServices = {
         data: null,
         error: {
           message: "Can not fetch availability",
+          error,
+        },
+      };
+    }
+  },
+  getTutorIdFromSession: async function () {
+    const cookieStore = await cookies();
+    try {
+      const sessionRes = await userService.getSession();
+      const userId = await sessionRes?.data?.session?.userId;
+      if (!userId) throw new Error("No userId found in session");
+      const tutorRes = await fetch(`${API_BASE}/api/users/${userId}/tutor-id`, {
+        headers: {
+          cookie: cookieStore.toString(),
+        },
+      });
+      const tutorData = await tutorRes.json();
+      return { data: tutorData?.data, error: null };
+    } catch (error: any) {
+      return {
+        data: null,
+        error: {
+          message: "Can not fetch tutor id",
           error,
         },
       };

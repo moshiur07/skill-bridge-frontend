@@ -5,28 +5,19 @@ import RecentActivityCard from "@/components/modules/Admin/RecentActivityCard";
 import RevenueChart from "@/components/modules/Admin/ReveneuChart";
 import StatCard from "@/components/modules/Admin/StatCard";
 import HeroBanner from "@/components/modules/home/hero";
+import TutorBanner from "@/components/modules/home/tutorBanner";
 
 import Testimonial01 from "@/components/shadcn-space/blocks/testimonial-02/testimonial";
 
 const HomePage = () => {
   return (
     <div>
-      {/* 
-          -> Navbar 
-          -> Banner
-          -> Tutor from top unis(uni logos)
-          -> how skillbridge works/ why skillbridge
-          -> featured tutors
-          -> testimonials
-      */}
-      {/* <Banner /> */}
-      {/* <Navbar5 /> */}
       <HeroBanner />
-      <div className="bg-linear-60 from-[#461D7C] to-[#E9B200]">
+      <div className="bg-linear-60 from-[#461D7C] to-[#E9B200] lg:px-12 px-5 py-5">
         <AboutFeatureds />
         <Faq5 />
         <Testimonial01 />
-        {/*  become a tutor */}
+        <TutorBanner />
       </div>
     </div>
   );

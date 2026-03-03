@@ -28,7 +28,7 @@ import {
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-const API_BASE = "https://skill-bridge-backend-myyv.onrender.com";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type BookingStatus = "pending" | "confirmed" | "completed" | "cancelled";

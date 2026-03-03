@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { studentService } from "@/components/services/student.service";
 
+const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL;
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface BookingSummary {
@@ -67,9 +68,16 @@ export default function PaymentPage() {
     setPayError("");
     setIsPaying(true);
     try {
-      const res = await studentService.makePayment(bookingId);
-      sessionStorage.removeItem("pending_booking");
-      setShowSuccess(true);
+      const res = await fetch(`${API_BASE}/api/bookings/${bookingId}/payment`, {
+        method: "PUT",
+        credentials: "include",
+      });
+      const json = await res.json();
+      console.log({ json });
+      if (json.success) {
+        sessionStorage.removeItem("pending_booking");
+        setShowSuccess(true);
+      }
     } catch (err) {
       setPayError(err instanceof Error ? err.message : "Payment failed.");
     } finally {

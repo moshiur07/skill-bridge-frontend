@@ -1,5 +1,3 @@
-// ! claude tanstack + zod
-
 "use client";
 
 import { useForm } from "@tanstack/react-form";
@@ -37,8 +35,7 @@ import {
   Plus,
   BookOpen,
 } from "lucide-react";
-
-const API_BASE = "https://skill-bridge-backend-myyv.onrender.com";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 // ─── Subjects ─────────────────────────────────────────────────────────────────
 
@@ -116,7 +113,7 @@ export default function TutorProfileClient({
   const [apiError, setApiError] = useState("");
 
   // map existing categories to ids for initial form value
-  const initialCategoryIds: number[] = (profile.categories ?? [])
+  const initialCategoryIds: number[] = (profile?.categories ?? [])
     .map((c) => SUBJECTS.find((s) => s.subject === c.name)?.id)
     .filter((id): id is number => id !== undefined);
 

@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
 import * as z from "zod";
+import Image from "next/image";
 
 const formSchema = z.object({
   password: z.string().min(6, "Password should 6 character or above!"),
@@ -42,7 +43,22 @@ export function LoginForm({
         if (error) {
           toast.error(error.message, { id: toastID, position: "top-center" });
         }
+        console.log({ dataFromLogin: data });
         if (data) {
+          if (data?.user?.role === "tutor" && data?.user?.image == null) {
+            toast.success(
+              `Welcome Back to skillBridge Sir ${data?.user?.name}! `,
+              {
+                id: toastID,
+                position: "top-center",
+                duration: 10000,
+                description:
+                  "Please update your profile information with a Professional Image to become a verified tutor and  listed in our tutor directory. This will help students find you and book sessions with you. Thank you for being a part of our community!",
+              },
+            );
+            window.location.href = "/tutor-dashboard/profile";
+            return;
+          }
           toast.success(`Welcome Back to skillBridge!`, {
             id: toastID,
             position: "top-center",
@@ -171,7 +187,7 @@ export function LoginForm({
             </FieldGroup>
           </form>
           <div className="bg-muted relative hidden md:block">
-            <img
+            <Image
               src="/undraw_access-account_aydp.svg"
               alt="Image"
               className="absolute inset-0 h-full w-full  dark:brightness-[0.2] dark:grayscale"

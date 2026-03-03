@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
-// const API_BASE = "https://skill-bridge-backend-myyv.onrender.com";
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+console.log("API_BASE:", API_BASE);
 export const userService = {
   getSession: async function () {
     try {
@@ -22,14 +22,16 @@ export const userService = {
       };
     }
   },
-  getAllTutors: async function () {
+  getAllTutors: async function (queryParams: string) {
+    console.log({ queryParams });
     try {
-      const res = await fetch(`${API_BASE}/api/tutors`, {
+      const res = await fetch(`${API_BASE}/api/tutors?${queryParams}`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
       const data = await res.json();
+      console.log({ "data from service": data });
       return { data, error: null };
     } catch (error: any) {
       return {
@@ -46,6 +48,7 @@ export const userService = {
       const res = await fetch(`${API_BASE}/api/tutors/${tutorId}`, {
         headers: {
           "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
         },
       });
       const data = await res.json();

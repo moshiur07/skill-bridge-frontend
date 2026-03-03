@@ -17,6 +17,7 @@ import { Slider } from "@/components/ui/slider";
 import Link from "next/link";
 import { useState, useTransition, useMemo } from "react";
 import { TutorCardSkeleton } from "./TutorCardSkeleton";
+import Image from "next/image";
 
 interface Category {
   id: number;
@@ -272,7 +273,7 @@ export function TutorsClient({
                 {/* Image Section */}
                 <div className="relative h-64 md:h-full ">
                   {tutor.image ? (
-                    <img
+                    <Image
                       src={tutor.image}
                       alt={tutor?.user?.name || "Tutor"}
                       className="max-h-120 w-full "

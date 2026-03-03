@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-const API_BASE = "https://skill-bridge-backend-myyv.onrender.com";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 export function CompleteButton({ bookingId }: { bookingId: string }) {
   const [loading, setLoading] = useState(false);
 

@@ -18,7 +18,7 @@ import { Separator } from "@/components/ui/separator";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 
-const API_BASE = "https://skill-bridge-backend-myyv.onrender.com";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 interface User {
   id: string;

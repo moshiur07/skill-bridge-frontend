@@ -37,7 +37,7 @@ import {
 import { availabilityHelper } from "@/components/helper/availabilityHelper";
 import { toast } from "sonner";
 
-const API_BASE = "https://skill-bridge-backend-myyv.onrender.com";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -201,6 +201,7 @@ export default function AvailabilityClient({ tutorId }: { tutorId: string }) {
   // ── Delete slot ──────────────────────────────────────────────────────────────
   async function handleDelete(id: string) {
     setDeletingId(id);
+    console.log("the slot being deletingggggggggg", id);
     try {
       const response = await fetch(
         `${API_BASE}/api/tutors/availability/${id}`,
@@ -210,6 +211,7 @@ export default function AvailabilityClient({ tutorId }: { tutorId: string }) {
         },
       );
 
+      console.log({ resOfDelete: response });
       if (!response.ok) {
         const json = await response.json().catch(() => ({}));
         throw new Error(json.message ?? `Delete failed (${response.status})`);

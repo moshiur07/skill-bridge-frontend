@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, Clock, Star, MessageSquare, BookOpen } from "lucide-react";
 import { Schedule, TutorProfileClientProps } from "@/Types/schemaTypes";
+import Link from "next/link";
+import { NoiseBackground } from "@/components/ui/noise-background";
 const DAYS_OF_WEEK = [
   "Sunday",
   "Monday",
@@ -26,24 +28,22 @@ export function TutorProfileClient({
   >(null);
   console.log({ tutor, tutorId });
 
-  // Sort availabilities by date
-  const sortedAvailabilities = [...tutor.availabilities].sort((a, b) => {
-    return (
-      new Date(a.start_date_time).getTime() -
-      new Date(b.start_date_time).getTime()
-    );
-  });
+  // Sort availabilities by time
+  const sortedAvailabilities = [...(tutor?.availabilities || [])].sort(
+    (a, b) => {
+      // Convert time string "5:00" to comparable format
+      const timeA = a.start_date_time.split(":").map(Number);
+      const timeB = b.start_date_time.split(":").map(Number);
 
-  // Filter only future and unbooked availabilities
-  const availableSlots = sortedAvailabilities.filter(
-    (slot) => !slot.is_booked && new Date(slot.start_date_time) > new Date(),
+      const minutesA = timeA[0] * 60 + timeA[1];
+      const minutesB = timeB[0] * 60 + timeB[1];
+
+      return minutesA - minutesB;
+    },
   );
 
-  const handleBooking = (availabilityId: string) => {
-    setSelectedAvailability(availabilityId);
-    // TODO: Implement booking logic or navigation to booking page
-    console.log("Book slot:", availabilityId);
-  };
+  // Filter only unbooked availabilities
+  const availableSlots = sortedAvailabilities.filter((slot) => !slot.is_booked);
 
   return (
     <div className="space-y-12">
@@ -86,56 +86,70 @@ export function TutorProfileClient({
                 <Button variant="outline">Request Custom Time</Button>
               </Card>
             ) : (
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 pb-8">
                 {availableSlots?.map((slot) => {
-                  const startDate = new Date(slot.start_date_time);
-                  const endDate = new Date(slot.end_date_time);
-                  const duration =
-                    (endDate.getTime() - startDate.getTime()) /
-                    (1000 * 60 * 60);
+                  // Parse time strings like "5:00" and "8:00"
+                  const [startHour, startMin] = slot.start_date_time
+                    .split(":")
+                    .map(Number);
+                  const [endHour, endMin] = slot.end_date_time
+                    .split(":")
+                    .map(Number);
+
+                  // Convert to minutes and calculate duration
+                  const startTotalMin = startHour * 60 + startMin;
+                  const endTotalMin = endHour * 60 + endMin;
+                  const duration = (endTotalMin - startTotalMin) / 60;
+
+                  // Format time display
+                  const formatTime = (h: number, m: number) => {
+                    const period = h >= 12 ? "PM" : "AM";
+                    const displayHour = h > 12 ? h - 12 : h === 0 ? 12 : h;
+                    return `${displayHour}:${String(m).padStart(2, "0")} ${period}`;
+                  };
+
+                  const startTimeDisplay = formatTime(startHour, startMin);
+                  const endTimeDisplay = formatTime(endHour, endMin);
+
+                  // Get today's date for display
+                  const today = new Date();
+                  const dateDisplay = today.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    month: "long",
+                    day: "numeric",
+                  });
 
                   return (
                     <Card
                       key={slot.id}
-                      className={`p-6 cursor-pointer transition-all hover:shadow-lg ${
-                        selectedAvailability === slot.id
-                          ? "ring-2 ring-primary"
-                          : ""
-                      }`}
+                      className={`p-6 bg-slate-500 text-white
+                         cursor-pointer transition-all hover:shadow-lg ${
+                           selectedAvailability === slot.id
+                             ? "ring-2 ring-primary"
+                             : ""
+                         }`}
                       onClick={() => setSelectedAvailability(slot.id)}
                     >
                       <div className="mb-4">
-                        <div className="text-sm font-medium text-muted-foreground mb-1">
-                          {startDate.toLocaleDateString("en-US", {
-                            weekday: "long",
-                            month: "long",
-                            day: "numeric",
-                          })}
+                        <div className="text-sm font-medium mb-1">
+                          {dateDisplay}
                         </div>
                         <div className="text-2xl font-bold">
-                          {startDate.toLocaleTimeString("en-US", {
-                            hour: "numeric",
-                            minute: "2-digit",
-                            hour12: true,
-                          })}
+                          {startTimeDisplay}
                         </div>
-                        <div className="text-sm text-muted-foreground">
-                          {duration} hour{duration !== 1 ? "s" : ""}
+                        <div className="text-sm">
+                          {duration} hour{duration !== 1 ? "s" : ""} (
+                          {startTimeDisplay} - {endTimeDisplay})
                         </div>
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="text-lg font-bold text-primary">
                           ${tutor.hourly_rate * duration}
                         </div>
-                        <Button
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleBooking(slot.id);
-                          }}
-                        >
-                          Book Now
-                        </Button>
+                        <Link href={`/booking/${tutorId}`}></Link>
+                        <NoiseBackground>
+                          <Button size="sm">Book Now</Button>
+                        </NoiseBackground>
                       </div>
                     </Card>
                   );
@@ -171,58 +185,61 @@ export function TutorProfileClient({
               </Card>
             ) : (
               <div className="grid gap-6">
-                {tutor?.bookings?.map((booking) => (
-                  <Card
-                    key={booking.id}
-                    className="p-6 text-white bg-slate-600"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div
-                        className="flex-shrink-0 border-white
-                        border-2  w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center"
+                {tutor?.bookings?.map(
+                  (booking) =>
+                    booking?.review !== null && (
+                      <Card
+                        key={booking.id}
+                        className="p-6 text-white bg-slate-600"
                       >
-                        <span className="text-lg font-bold text-primary">
-                          {booking?.student?.name?.charAt(0)} sd
-                        </span>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-semibold">
-                            {booking?.student?.name}
-                          </h4>
-                          <div className="flex items-center gap-1">
-                            {[...Array(5)]?.map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`h-4 w-4 ${
-                                  i < tutor.rating_average
-                                    ? "fill-amber-400 text-amber-400"
-                                    : "text-gray-300"
-                                }`}
-                              />
-                            ))}
+                        <div className="flex items-start gap-4">
+                          <div
+                            className="flex-shrink-0 border-white
+                        border-2  w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center"
+                          >
+                            <span className="text-lg font-bold text-primary">
+                              {booking?.student?.name?.charAt(0)} ST
+                            </span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-2">
+                              <h4 className="font-semibold">
+                                {booking?.review?.comment}
+                              </h4>
+                              <div className="flex items-center gap-1">
+                                {[...Array(5)]?.map((_, i) => (
+                                  <Star
+                                    key={i}
+                                    className={`h-4 w-4 ${
+                                      i < tutor.rating_average
+                                        ? "fill-amber-400 text-amber-400"
+                                        : "text-gray-300"
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                            <div className="text-sm text-white mb-2">
+                              {new Date(booking?.created_at).toLocaleDateString(
+                                "en-US",
+                                {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                },
+                              )}
+                              {" • "}
+                              {booking?.duration_hours} hour session
+                            </div>
+                            <Badge variant="secondary" className="mb-3">
+                              {booking?.status}
+                            </Badge>
+                            {/* Note: Review content would come from the Review model if populated */}
                           </div>
                         </div>
-                        <div className="text-sm text-white mb-2">
-                          {new Date(booking?.created_at).toLocaleDateString(
-                            "en-US",
-                            {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            },
-                          )}
-                          {" • "}
-                          {booking?.duration_hours} hour session
-                        </div>
-                        <Badge variant="secondary" className="mb-3">
-                          {booking?.status}
-                        </Badge>
-                        {/* Note: Review content would come from the Review model if populated */}
-                      </div>
-                    </div>
-                  </Card>
-                ))}
+                      </Card>
+                    ),
+                )}
               </div>
             )}
           </div>

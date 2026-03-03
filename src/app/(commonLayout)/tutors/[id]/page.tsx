@@ -6,30 +6,16 @@ import { Button } from "@/components/ui/button";
 import { themeColor } from "@/components/helper/colorValue";
 import { NoiseBackground } from "@/components/ui/noise-background";
 import { userService } from "@/components/services/user.service";
+import Image from "next/image";
 
 export default async function TutorProfilePage({
   params,
 }: TutorProfilePageProps) {
   const { id } = await params;
-
-  // // Fetch tutor profile from API
-  // const response = await fetch(`${process.env.BACKEND_URL}/api/tutors/${id}`, {
-  //   cache: "no-store",
-  // });
-
-  // if (!response.ok) {
-  //   notFound();
-  // }
-
-  // const result: ApiResponse = await response.json();
-
-  // if (!result.success || !result.data) {
-  //   notFound();
-  // }
-
   const result = await userService.getSingleTutor(id);
 
   const tutor = result?.data?.data;
+
   return (
     <section
       className={`flex justify-center mx-auto bg-linear-to-br from-[${themeColor.lBlue}] to-[${themeColor.dBlue}]`}
@@ -43,7 +29,7 @@ export default async function TutorProfilePage({
               <div className="relative">
                 <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-primary/10 to-primary/5">
                   {tutor.image ? (
-                    <img
+                    <Image
                       src={tutor.image}
                       alt={tutor.user.name}
                       className="w-full h-full object-cover"
@@ -151,35 +137,3 @@ export default async function TutorProfilePage({
     </section>
   );
 }
-
-// // Generate metadata for SEO
-// export async function generateMetadata({ params }: TutorProfilePageProps) {
-//   const { id } = await params;
-
-//   try {
-//     const response = await fetch(
-//       `${process.env.BACKEND_URL}/api/tutors/${id}`,
-//       {
-//         cache: "no-store",
-//       },
-//     );
-
-//     if (!response.ok) {
-//       return {
-//         title: "Tutor Not Found",
-//       };
-//     }
-
-//     const result: ApiResponse = await response.json();
-//     const tutor = result.data;
-
-//     return {
-//       title: `${tutor.user.name} - ${tutor.categories.map((c) => c.name).join(", ")} Tutor`,
-//       description: tutor.bio.substring(0, 160),
-//     };
-//   } catch (error) {
-//     return {
-//       title: "Tutor Profile",
-//     };
-//   }
-// }

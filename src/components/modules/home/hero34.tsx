@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Hero34Props {
   className?: string;
@@ -35,12 +36,12 @@ const Hero34 = ({ className }: Hero34Props) => {
             </Link>
           </div>
           <div>
-            <img
+            <Image
               src="https://images.pexels.com/photos/5212675/pexels-photo-5212675.jpeg"
               alt="placeholder hero"
               className="h-56 w-1xl rounded-b-4xl"
             />
-            <img
+            <Image
               src="https://images.pexels.com/photos/4261793/pexels-photo-4261793.jpeg"
               alt="placeholder hero"
               className="h-56 w-1xl rounded-b-4xl"

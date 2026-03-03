@@ -32,7 +32,7 @@ export default async function TutorsPage({
   if (params.page) {
     queryParams.append("page", params.page);
   }
-  const initialTutors = await userService.getAllTutors();
+  const initialTutors = await userService.getAllTutors(queryParams.toString());
   return (
     <section
       className={`flex justify-center mx-auto bg-linear-150 from-[${themeColor.dBlue}] via-[${themeColor.vanilla}] to-[${themeColor.dYellow}]`}

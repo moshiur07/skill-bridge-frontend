@@ -57,7 +57,6 @@ export const adminNav: NavItem[] = [
   { label: "Admin", isSection: true },
   { title: "Dashboard", icon: BarChart3, href: "/admin-dashboard" },
   { title: "Users", icon: Users, href: "/admin-dashboard/users" },
-  { title: "Bookings", icon: BookMarked, href: "/admin-dashboard/bookings" },
   {
     title: "Categories",
     icon: ClipboardList,

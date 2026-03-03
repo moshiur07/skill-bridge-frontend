@@ -24,8 +24,9 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { tutorServices } from "@/components/services/tutor.service";
 import { studentService } from "@/components/services/student.service";
+
+const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -105,7 +106,13 @@ export default function BookingPage() {
       setIsFetching(true);
       setFetchError("");
       try {
-        const data = await tutorServices.getBookingsById(tutorId);
+        const res = await fetch(`${API_BASE}/api/tutors/${tutorId}`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        const data = await res.json();
         setTutor(data.data);
       } catch (err) {
         setFetchError(
@@ -141,9 +148,21 @@ export default function BookingPage() {
         subject: selectedSubject,
       };
 
-      const res = await studentService.createBooking(load);
-      const bookingId = res?.data?.data?.id;
+      // const res = await studentService.createBooking(load);
 
+      const res = await fetch(`${API_BASE}/api/bookings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(load),
+      });
+
+      const json = await res.json();
+
+      const bookingId = json?.data?.id;
+      console.log({ bookingId });
       // pass summary to payment page via sessionStorage
       sessionStorage.setItem(
         "pending_booking",
@@ -437,3 +456,19 @@ export default function BookingPage() {
     </div>
   );
 }
+// import BookingPageClient from "@/components/helper/BookingPageClient";
+// import { tutorServices } from "@/components/services/tutor.service";
+// import { useParams } from "next/navigation";
+
+// const BookingPageServer = async () => {
+//   const params = useParams();
+//   const tutorId = params?.tutorId as string;
+//   const data = await tutorServices.getBookingsById(tutorId);
+//   return (
+//     <div>
+//       <BookingPageClient data={data?.data} />
+//     </div>
+//   );
+// };
+
+// export default BookingPageServer;

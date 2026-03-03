@@ -27,6 +27,7 @@ import { useForm } from "@tanstack/react-form";
 import * as z from "zod";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+import Image from "next/image";
 
 const formSchema = z.object({
   name: z.string().min(4, "This Field is Required!"),
@@ -253,7 +254,7 @@ export function SignupForm({
             </FieldGroup>
           </form>
           <div className="bg-muted relative hidden  md:block">
-            <img
+            <Image
               src="/undraw_sign-up_qamz.svg"
               alt="Image"
               className="absolute inset-0  w-full h-3/4 mx-auto  mt-20 dark:brightness-[0.2] dark:grayscale"

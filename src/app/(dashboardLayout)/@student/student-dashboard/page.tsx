@@ -1,5 +1,3 @@
-// !claude
-
 import {
   Card,
   CardContent,
@@ -13,28 +11,20 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   BookMarked,
   DollarSign,
-  Clock,
   Search,
   ChevronRight,
-  Star,
   AlertCircle,
   CheckCircle2,
   CalendarClock,
 } from "lucide-react";
 import Link from "next/link";
-import { studentService } from "@/components/services/student.service";
+import { cookies } from "next/headers";
+
+// Define your API Base here or pull from process.env
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type BookingStatus = "pending" | "confirmed" | "completed" | "cancelled";
-
-interface RecentBooking {
-  id: string;
-  tutor: { name: string; image?: string };
-  subject: string;
-  status: BookingStatus;
-  total_price: number;
-  duration_hours: number;
-}
 
 const statusConfig: any = {
   pending: {
@@ -60,7 +50,7 @@ const statusConfig: any = {
 };
 
 function initials(name: string) {
-  return name
+  return (name || "U")
     .split(" ")
     .map((n) => n[0])
     .join("")
@@ -84,7 +74,9 @@ function StatCard({
         <div className="flex items-start justify-between">
           <div>
             <p className="text-sm text-muted-foreground mb-1">{title}</p>
-            <p className="text-2xl font-semibold tracking-tight">{value}</p>
+            <p className="text-2xl font-semibold tracking-tight">
+              {value ?? 0}
+            </p>
             {sub && <p className="text-xs text-muted-foreground mt-1">{sub}</p>}
           </div>
           <div className="p-2 rounded-lg bg-primary/10">
@@ -97,9 +89,35 @@ function StatCard({
 }
 
 export default async function StudentDashboard() {
-  const resData = await studentService.getMyBookings();
-  const stats = await resData?.stats;
-  console.log(await resData, await stats);
+  const cookieStore = await cookies();
+  const cookieString = cookieStore.toString();
+
+  let resData = { data: [], stats: null };
+
+  try {
+    const res = await fetch(`${API_BASE}/api/bookings/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        // 2. Manually pass the cookies to your backend
+        Cookie: cookieString,
+      },
+      cache: "no-store",
+    });
+
+    if (res.ok) {
+      const parsed = await res.json();
+      resData = {
+        data: parsed?.data || [],
+        stats: parsed?.stats || null,
+      };
+    }
+  } catch (error) {
+    console.error("Dashboard fetch error:", error);
+  }
+
+  const stats: any = await resData.stats;
+  console.log(stats);
   return (
     <div className="p-6 space-y-6 max-w-5xl mx-auto">
       {/* Heading */}
@@ -139,7 +157,7 @@ export default async function StudentDashboard() {
         />
         <StatCard
           title="Total Spent"
-          value={`$${stats?.total_spent}`}
+          value={`$${stats?.total_spent || 0}`}
           sub="All time"
           icon={DollarSign}
         />
@@ -163,42 +181,50 @@ export default async function StudentDashboard() {
           </Link>
         </CardHeader>
         <CardContent className="space-y-3">
-          {resData?.data?.map((b: any) => {
-            const s = statusConfig[b?.status];
-            return (
-              <div
-                key={b.id}
-                className="flex items-center justify-between gap-3 rounded-lg border px-4 py-3"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <Avatar className="w-8 h-8 shrink-0">
-                    <AvatarImage src={b?.tutor?.image} />
-                    <AvatarFallback className="text-xs">
-                      {initials(b?.tutor?.user?.name)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium truncate">
-                      {b.tutor?.user?.name}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {b.subject} · {b.duration_hours}h
-                    </p>
+          {resData.data.length > 0 ? (
+            resData.data.map((b: any) => {
+              const s = statusConfig[b?.status] || statusConfig.pending;
+              return (
+                <div
+                  key={b.id}
+                  className="flex items-center justify-between gap-3 rounded-lg border px-4 py-3"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Avatar className="w-8 h-8 shrink-0">
+                      <AvatarImage src={b?.tutor?.image} />
+                      <AvatarFallback className="text-xs">
+                        {initials(b?.tutor?.user?.name)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium truncate">
+                        {b.tutor?.user?.name}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {b.subject} · {b.duration_hours}h
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="text-sm font-medium">
+                      ${b.total_price}
+                    </span>
+                    <Badge
+                      variant="outline"
+                      className={`text-xs gap-1 ${s.className}`}
+                    >
+                      {s.icon}
+                      {s.label}
+                    </Badge>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-sm font-medium">${b.total_price}</span>
-                  <Badge
-                    variant="outline"
-                    className={`text-xs gap-1 ${s.className}`}
-                  >
-                    {s.icon}
-                    {s.label}
-                  </Badge>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <p className="text-center py-4 text-sm text-muted-foreground">
+              No recent bookings found.
+            </p>
+          )}
         </CardContent>
       </Card>
 
