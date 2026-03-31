@@ -1,9 +1,5 @@
 import AboutFeatureds from "@/components/about3";
 import { Faq5 } from "@/components/faq5";
-import BookingStatusChart from "@/components/modules/Admin/Bookingstatuschart";
-import RecentActivityCard from "@/components/modules/Admin/RecentActivityCard";
-import RevenueChart from "@/components/modules/Admin/ReveneuChart";
-import StatCard from "@/components/modules/Admin/StatCard";
 import HeroBanner from "@/components/modules/home/hero";
 import TutorBanner from "@/components/modules/home/tutorBanner";
 

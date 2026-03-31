@@ -92,6 +92,7 @@ const HeroBanner = () => {
                     src="https://images.pexels.com/photos/4261793/pexels-photo-4261793.jpeg"
                     alt="Language teacher"
                     fill
+                    priority
                     className="object-cover"
                   />
                 </div>
@@ -119,6 +120,7 @@ const HeroBanner = () => {
                     src="https://images.pexels.com/photos/5212675/pexels-photo-5212675.jpeg"
                     alt="Language student"
                     fill
+                    priority
                     className="object-cover"
                   />
                 </div>

@@ -88,7 +88,7 @@ export function TutorsClient({
 
   // Update URL params (replaces useState)
   const updateFilter = (key: string, value: string) => {
-    const params = new URLSearchParams(currentSearchParams.toString());
+    const params = new URLSearchParams(currentSearchParams?.toString());
 
     if (
       value === "" ||
@@ -101,7 +101,7 @@ export function TutorsClient({
     }
 
     startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      router.push(`${pathname}?${params?.toString()}`, { scroll: false });
     });
   };
 
@@ -179,7 +179,7 @@ export function TutorsClient({
                       {categories.map((category) => (
                         <SelectItem
                           key={category.id}
-                          value={category.id.toString()}
+                          value={category?.id?.toString()}
                         >
                           {category.name}
                         </SelectItem>
@@ -219,7 +219,7 @@ export function TutorsClient({
                     step={10}
                     value={[filters.price]}
                     onValueChange={(value) =>
-                      updateFilter("price", value[0].toString())
+                      updateFilter("price", value[0]?.toString())
                     }
                     className="mt-4"
                   />
