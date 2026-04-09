@@ -13,8 +13,8 @@ export async function proxy(request: NextRequest) {
 
   if (data) {
     isAuthenticated = true;
-    isAdmin = data.user.role === "admin";
-    isTutor = data.user.role === "tutor";
+    isAdmin = data.user?.role === "admin";
+    isTutor = data.user?.role === "tutor";
   }
 
   if (!isAuthenticated) {
@@ -43,6 +43,9 @@ export async function proxy(request: NextRequest) {
   if (!isAdmin && !isTutor && pathName.startsWith("/tutor-dashboard")) {
     return NextResponse.redirect(new URL("/student-dashboard", request.url));
   }
+  if (!isAdmin && !isTutor && pathName.startsWith("/become-tutor")) {
+    return NextResponse.redirect(new URL("/student-dashboard", request.url));
+  }
   return NextResponse.next();
 }
 
@@ -55,5 +58,6 @@ export const config = {
     "/student-dashboard/:path*",
     "/admin-dashboard",
     "/admin-dashboard/:path*",
+    "/become-tutor",
   ],
 };

@@ -167,6 +167,7 @@ export default function BecomeATutorRegisterPage() {
       try {
         toast.loading("Submitting your tutor profile...", {
           id: "tutor-submit",
+          position: "top-center",
         });
         const token =
           typeof window !== "undefined"
@@ -189,6 +190,7 @@ export default function BecomeATutorRegisterPage() {
         if (!res.ok) {
           toast.error(result?.message || "Failed to submit tutor profile.", {
             id: "tutor-submit",
+            position: "top-center",
           });
         }
         toast.success(
@@ -196,6 +198,7 @@ export default function BecomeATutorRegisterPage() {
           {
             id: "tutor-submit",
             duration: 5000,
+            position: "top-center",
           },
         );
         form.reset();
@@ -203,7 +206,7 @@ export default function BecomeATutorRegisterPage() {
       } catch (error) {
         toast.error(
           error instanceof Error ? error.message : "Failed to submit profile.",
-          { id: "tutor-submit" },
+          { id: "tutor-submit", position: "top-center" },
         );
       }
     },

@@ -31,7 +31,6 @@ interface Navbar5Props {
 
 const Navbar5 = ({ className, session }: Navbar5Props) => {
   const user = session?.data?.user;
-
   const dashboardHref =
     user?.role === "admin"
       ? "/admin-dashboard"
@@ -81,6 +80,16 @@ const Navbar5 = ({ className, session }: Navbar5Props) => {
                   Dashboard
                 </NavigationMenuLink>
               </NavigationMenuItem>
+              {user?.role === "student" && (
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    href="/become-tutor"
+                    className={`${navigationMenuTriggerStyle()}relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:w-full after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100`}
+                  >
+                    Become A Tutor
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              )}
             </NavigationMenuList>
           </NavigationMenu>
           <div className="hidden items-center gap-4 lg:flex">
@@ -164,6 +173,14 @@ const Navbar5 = ({ className, session }: Navbar5Props) => {
                   >
                     Dashboard
                   </Link>
+                  {user?.role === "student" && (
+                    <Link
+                      href={"/become-tutor"}
+                      className="flex items-center gap-2 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:w-full after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100"
+                    >
+                      Become A Tutor
+                    </Link>
+                  )}
                 </div>
                 <div className="mt-6 flex flex-col gap-4">
                   {session.data ? (
@@ -174,12 +191,12 @@ const Navbar5 = ({ className, session }: Navbar5Props) => {
                         <AvatarImage
                           src={
                             user?.image
-                              ? `${user.image}`
+                              ? `${user?.image}`
                               : "https://images.shadcnspace.com/assets/profiles/user-11.jpg"
                           }
                           alt="User"
                         />
-                        <AvatarFallback>DM</AvatarFallback>
+                        <AvatarFallback>{user?.name.charAt(0)}</AvatarFallback>
                       </Avatar>
                     </div>
                   ) : (

@@ -9,7 +9,7 @@ interface BecomeATutorBannerProps {
 }
 
 export default function BecomeATutorBanner({
-  ctaLink = "/login",
+  ctaLink = "/become-tutor",
   learnMoreLink = "/about",
 }: BecomeATutorBannerProps) {
   return (
@@ -88,7 +88,7 @@ export default function BecomeATutorBanner({
               {/* CTA Button */}
               <div className="flex flex-col sm:flex-row gap-4 pt-6 justify-center lg:justify-start">
                 <Link
-                  href={ctaLink}
+                  href="/become-tutor"
                   className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 flex items-center justify-center gap-2 text-center"
                 >
                   <span>Get Started Today</span>
