@@ -104,7 +104,7 @@ The project follows a consistent design system leveraging:
 ## 👤 Author
 **Moshiur Rahman**
 - GitHub: [@moshiur07](https://github.com/moshiur07)
-- Website: [moshiur.dev](https://moshiur.dev)
+- Website: [moshiur.dev](https://moshiur-rahman-dev.netlify.app/)
 
 ---
 *Skill Bridge - Bridging the gap between knowledge and expertise.*
